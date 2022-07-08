@@ -301,31 +301,31 @@ Gui, Add, Button, x740 y560 w110 h20 gsave, Save
 Gui, Add, CheckBox, x250 y370 w50 h20 0 vctrl1, CTRL
 Gui, Add, CheckBox, x305 y370 w40 h20 valt1, ALT
 Gui, Add, CheckBox, x350 y370 w50 h20 vshift1, SHIFT
-Gui, Add, DropDownList, x400 y370 w50 h200 vdropdown1, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=
+Gui, Add, DropDownList, x400 y370 w50 h200 vdropdown1, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
 Gui, Add, Edit, x475 y370 w120 h20 vstring1, %string1%
 
 Gui, Add, CheckBox, x250 y410 w50 h20 vctrl2, CTRL
 Gui, Add, CheckBox, x305 y410 w40 h20 valt2, ALT
 Gui, Add, CheckBox, x350 y410 w50 h20 vshift2, SHIFT
-Gui, Add, DropDownList, x400 y410 w50 h200 vdropdown2, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=
+Gui, Add, DropDownList, x400 y410 w50 h200 vdropdown2, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
 Gui, Add, Edit, x475 y410 w120 h20 vstring2, %string2%
 
 Gui, Add, CheckBox, x250 y450 w50 h20 vctrl3, CTRL
 Gui, Add, CheckBox, x305 y450 w40 h20 valt3, ALT
 Gui, Add, CheckBox, x350 y450 w50 h20 vshift3, SHIFT
-Gui, Add, DropDownList, x400 y450 w50 h200 vdropdown3, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=
+Gui, Add, DropDownList, x400 y450 w50 h200 vdropdown3, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
 Gui, Add, Edit, x475 y450 w120 h20 vstring3, %string3%
 
 Gui, Add, CheckBox, x250 y490 w50 h20 vctrl4, CTRL
 Gui, Add, CheckBox, x305 y490 w40 h20 valt4, ALT
 Gui, Add, CheckBox, x350 y490 w50 h20 vshift4, SHIFT
-Gui, Add, DropDownList, x400 y490 w50 h200 vdropdown4, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=
+Gui, Add, DropDownList, x400 y490 w50 h200 vdropdown4, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
 Gui, Add, Edit, x475 y490 w120 h20 vstring4, %string4%
 
 Gui, Add, CheckBox, x250 y530 w50 h20 vctrl5, CTRL
 Gui, Add, CheckBox, x305 y530 w40 h20 valt5, ALT
 Gui, Add, CheckBox, x350 y530 w50 h20 vshift5, SHIFT
-Gui, Add, DropDownList, x400 y530 w50 h200 vdropdown5, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=
+Gui, Add, DropDownList, x400 y530 w50 h200 vdropdown5, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
 Gui, Add, Edit, x475 y530 w120 h20 vstring5, %string5%
 
 
