@@ -6,7 +6,7 @@ This tool is a simple passion project for my needs regarding CAD/Omniwin, J D Ed
 
 
 Support for simple strings, AHK formatted keys, and external executable's or ahk scripts.
-![KeyChain](https://user-images.githubusercontent.com/32394719/177990797-a9f4d985-8c1d-4832-9abb-a2638739bdbd.PNG)
+![KeyChain](https://user-images.githubusercontent.com/32394719/178035093-235c7b7c-9987-4681-9fdb-ddf3327acd37.PNG)
 
 
 Usage:
@@ -15,3 +15,4 @@ To send a simple string or AHK key command simply type it in the provided text b
 
 To run scripts / external applications simply type "Script" and then the full file name.
   Support for ahk scripts and external applications outside of the "scripts" folder has not yet been added.
+
