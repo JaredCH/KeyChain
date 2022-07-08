@@ -1,4 +1,4 @@
-﻿;~ KeyChain was developed on 7/1/2022 by Jared Hicks
+;~ KeyChain was developed on 7/1/2022 by Jared Hicks
 ;~ The purpose of this application is to allow the user to setup, save,
 ;~ and re use macros
 ;~ The application allows the user to input any plain text string, and some ahk character mappings
@@ -25,7 +25,6 @@ IfNotExist, %A_AppData%\KeyChain
 IfNotExist, %A_AppData%\KeyChain\Scripts
    FileCopyDir, Z:\Development\KeyChain\Scripts, %A_AppData%\KeyChain\Scripts ,
    
-IfNotExist, %A_AppData%\KeyChain\Icon
 	FileCopyDir, Z:\Development\KeyChain\Icon, %A_AppData%\KeyChain\Icon ,
 
 IfNotExist, %A_AppData%\KeyChain\Inifile.ini
@@ -447,16 +446,67 @@ if dropdown5 != null
 			Hotkey, %prestring%%dropdown5%, hotkey5, On
 			prestring=
 		}
-		
+
+Gui, Add, ListView, x645 y375 w300 h170 Grid glistview, Script Name      ~double click to copy~|Type
+Loop, %A_AppData%\KeyChain\Scripts\*.*
+  LV_Add("",A_LoopFileName, A_LoopFileExt)
+  LV_ModifyCol(2, 50)
+  LV_ModifyCol(1, 225)
+  LV_ModifyCol(2, "SortDesc")
 		
 Gui, Show, w1000 h600, KeyChain
-Menu, Tray, Add, Show, ShowGui
+Menu, Tray, Add, Reset Config, ResetConfig
+Menu, Tray, Add, Help Documentation, help
+Menu, Tray, Add, AHK Keys Guide, ahkkeys
 Menu, Tray, Add, Update Scripts, UpdateScripts
+Menu, Tray, Add, Show Interface, ShowGui
+return
+;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+RemoveToolTip:
+ToolTip
+return
+
+ResetConfig:
+  MSGBox, 273, KeyChain - Reset Config, Are you sure you want to do this?`n`nProceeding will reset all of your saved settings within this application.
+  IfMsgBox, Cancel 
+   return
+  Else
+	TrayTip KeyChain, Resetting configuration please wait.,
+Sleep 5000   ; Let it display for 3 seconds.
+HideTrayTip()
+	FileCopyDir, Z:\Development\KeyChain\Icon, %A_AppData%\KeyChain\Icon ,1
+	FileCopy, Z:\Development\KeyChain\Inifile.ini, %A_AppData%\KeyChain\Inifile.ini ,1
+	reload
 return
 
 
+listview:
+if (A_GuiEvent = "DoubleClick")
+{
+	tooltip
+    LV_GetText(RowText, A_EventInfo)  ; Get the text from the row's first field.
+	clipboard= Script %RowText%
+    Tooltip Coppied "Script %RowText%" to clipboard
+SetTimer, RemoveToolTip, -2000
+	
+}
+return
 
+help:
+run, %A_AppData%\KeyChain\Icon\KeyChain Help.png
+return
+
+ahkkeys:
+run, https://www.autohotkey.com/docs/commands/Send.htm
+return
 
 ShowGui:
 Gui, Show,
@@ -484,9 +534,44 @@ send, %string5%
 return
 
 UpdateScripts:
-   FileCopyDir, Z:\Development\KeyChain\Scripts, %A_AppData%\KeyChain\Scripts , 1
-   Msgbox, Scripts Updated.
-   return
+Loop, Z:\Development\KeyChain\Scripts\*.*
+{
+   step = %A_Index%
+}
+
+stepincrement = 1
+Progress, h100 R0-%Step%, , Updating..., Updateding Script Repository
+Loop, Z:\Development\KeyChain\Scripts\*.*
+{
+FileCopy, %a_loopfilefullpath%, %A_AppData%\KeyChain\Scripts\%a_loopfilename%, 1
+Progress, %stepincrement%, %a_loopfilename%, Updating..., Updateding Script Repository %a_index% of %step%
+Sleep, 50
+stepincrement += 1 
+IfEqual, a_index, %step%, Progress, Off
+}
+LV_Delete()
+Loop, %A_AppData%\KeyChain\Scripts\*.*
+  LV_Add("",A_LoopFileName, A_LoopFileExt)
+  LV_ModifyCol(2, 40)
+  LV_ModifyCol(1, 200)
+  LV_ModifyCol(2, "SortDesc")
+
+TrayTip KeyChain, Scripts Repository Updated Successfully!
+Sleep 4000   ; Let it display for 3 seconds.
+HideTrayTip()
+return
+
+
+
+HideTrayTip() {
+    TrayTip  ; Attempt to hide it the normal way.
+    if SubStr(A_OSVersion,1,3) = "10." {
+        Menu Tray, NoIcon
+        Sleep 200  ; It may be necessary to adjust this sleep.
+        Menu Tray, Icon
+    }
+}
+
 
 
 Hide:
@@ -970,7 +1055,7 @@ F8::
 	else
 IfInString, F8, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F8, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -988,7 +1073,7 @@ F9::
 	else
 IfInString, F9, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F9, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1007,7 +1092,7 @@ F10::
 	else
 IfInString, F10, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F10, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1026,7 +1111,7 @@ F11::
 
 IfInString, F11, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F11, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1040,7 +1125,7 @@ F13::
 ;~ send, {escape 2}^n
 IfInString, F13, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F13, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1052,7 +1137,7 @@ F14::
 ;~ send, {escape 2}3
 IfInString, F14, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F14, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1064,7 +1149,7 @@ F15::
 ;~ send, {escape 2}t
 IfInString, F15, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F15, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1076,7 +1161,7 @@ F16::
 ;~ send, {escape 2}d{BackSpace}0{Enter}
 IfInString, F16, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F16, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1088,7 +1173,7 @@ F17::
 ;~ send, {escape 2}1{BackSpace}0{Enter}
 IfInString, F17, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F17, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1100,7 +1185,7 @@ F18::
 ;~ send, {escape 2}{Shift}{L}
 IfInString, F18, Script
 {
-	StringSplit, ScriptArray, F1, %A_Space%,
+	StringSplit, ScriptArray, F18, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
@@ -1600,8 +1685,8 @@ RETURN
 	else
 IfInString, Wtilde, Script
 {
-	StringSplit, ScriptArray, Wtilde, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, Wtilde, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1616,8 +1701,8 @@ RETURN
 	else
 IfInString, W1, Script
 {
-	StringSplit, ScriptArray, W1, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, W1, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1632,8 +1717,8 @@ RETURN
 	else
 IfInString, W2, Script
 {
-	StringSplit, ScriptArray, W2, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, W2, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1648,8 +1733,8 @@ RETURN
 	else
 IfInString, W3, Script
 {
-	StringSplit, ScriptArray, W3, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, W3, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1664,8 +1749,8 @@ RETURN
 	else
 IfInString, W4, Script
 {
-	StringSplit, ScriptArray, W4, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, W4, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1680,8 +1765,8 @@ RETURN
 	else
 IfInString, W5, Script
 {
-	StringSplit, ScriptArray, W5, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, W5, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1696,8 +1781,8 @@ RETURN
 	else
 IfInString, W6, Script
 {
-	StringSplit, ScriptArray, W6, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, W6, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1712,8 +1797,8 @@ RETURN
 	else
 IfInString, W7, Script
 {
-	StringSplit, ScriptArray, W7, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, W7, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1723,13 +1808,13 @@ RETURN
 #8::
 	if !W8
 	{
-		send, {{LWin Down}8{LWin Up}
+		send, {LWin Down}8{LWin Up}
 	}
 	else
 IfInString, W8, Script
 {
-	StringSplit, ScriptArray, W8, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, w8, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1744,8 +1829,8 @@ RETURN
 	else
 IfInString, W9, Script
 {
-	StringSplit, ScriptArray, W9, %W_Space%,
-    Run %W_WorkingDir%/Scripts/%ScriptArray2%
+	StringSplit, ScriptArray, w9, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
 else
@@ -1754,7 +1839,7 @@ RETURN
 
 
 	GuiClose:
-  MSGBox, 4, , Would you like to save any changes?
+  MSGBox, 36, KeyChain, Would you like to save any changes?
   IfMsgBox, No 
     ExitApp 
   Else
