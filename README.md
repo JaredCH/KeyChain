@@ -1,7 +1,7 @@
 # KeyChain
 Manages key mapping for hotkeys and scripts/executeables.
 
-![KeyChain](https://user-images.githubusercontent.com/32394719/178035093-235c7b7c-9987-4681-9fdb-ddf3327acd37.PNG)
+![Capture](https://user-images.githubusercontent.com/32394719/178347513-85aec7fa-5b74-44bc-ab65-ca02f8193f22.PNG)
 
 # Features
 - Sends plain text.
