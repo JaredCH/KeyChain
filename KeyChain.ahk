@@ -312,7 +312,7 @@ dd4=
 dd5=
 
 
-if (dropdown1 != "Null" and string2 != "")
+if (dropdown1 != "Null" and string1 != "")
 		{
 				if(ctrl1=1)
 			{
