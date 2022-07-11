@@ -1,9 +1,6 @@
 # KeyChain
 An AHK tool to manage macros and external scripts.
 
-
-This tool is a passion project for my needs regarding CAD/Omniwin, J D Edwards, and Excel. Some of the scripts provided are hard coded specifically for my use case and will not work properlly if executed on your computer.
-
 ![KeyChain](https://user-images.githubusercontent.com/32394719/178035093-235c7b7c-9987-4681-9fdb-ddf3327acd37.PNG)
 
 # Features
