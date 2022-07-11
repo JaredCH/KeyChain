@@ -14,10 +14,11 @@ Manages key mapping for hotkeys and scripts/executeables.
 - Click command (Click X Y / Click 100 100)
 - Internal command ShowXY to show the X and Y coordinates of the mouse in real time.
 
-![KeyChain Help](https://user-images.githubusercontent.com/32394719/178319097-d7a6e608-d705-40dc-8dbc-d3390553d859.png)
-
 # Usage:
 - To send a simple string or AHK key command simply type it in the provided text box.
 - To run scripts / external applications simply type "Script" and then the full file name.
-
+- To run programs type "Run program_name" Ex: Run Notepad
+- To use the google search function, simply have "Google" in the hotkey text box.
+- To Click type "Click Xcord Ycord" Ex: Click 100 100
+- To use the Internal command to show the X and Y coordinate of the mouse simply have "Internal ShowXY" in the hotkey text box.
 
