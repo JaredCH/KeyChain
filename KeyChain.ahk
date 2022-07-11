@@ -4,22 +4,20 @@
 ;~ The application allows the user to input any plain text string, and some ahk character mappings
 ;~ as well as the full name of any script located in the 'Scripts' directory outlined below.
 ;~ Upon activation via hotkey, the user defined string or AHK script will be sent or executed.
+;~ v2.00 - Support for 62 key combinations & 11 Scripts
 ;~ //////////////////////////////////////////////////////////////
-;~ //////////////////////////////////////////////////////////////
-;~ //////////////////////////////////////////////////////////////
-;~ //////////////////////////////////////////////////////////////
+;~ ====developer notes | TODO
+;~ ====Build interpreter for omniwin defined keys vs Keychain keys
 ;~ //////////////////////////////////////////////////////////////
 ;~ Copyright (C) [2022] [Jared Hicks]
 ;~ GNU General Public License
 ;~ <https://www.gnu.org/licenses>
 ;~ //////////////////////////////////////////////////////////////
-;~ //////////////////////////////////////////////////////////////
-;~ //////////////////////////////////////////////////////////////
-;~ //////////////////////////////////////////////////////////////
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////Installation Setup
 ;~ //////////////////////////////////////////////////////////////
+
 IfNotExist, %A_AppData%\KeyChain
+SplashTextOn, 225, 50, Loading Keychain settings, This may take a few moments.
    FileCreateDir, %A_AppData%\KeyChain
    
 IfNotExist, %A_AppData%\KeyChain\Scripts
@@ -30,9 +28,7 @@ IfNotExist, %A_AppData%\KeyChain\Scripts
 IfNotExist, %A_AppData%\KeyChain\Inifile.ini
 	FileCopy, Z:\Development\KeyChain\Inifile.ini, %A_AppData%\KeyChain\Inifile.ini ,
    
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ - FUNCTION KEYS
-;~ //////////////////////////////////////////////////////////////
 IniRead, f1, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F1
 IniRead, f2, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F2
 IniRead, f3, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F3
@@ -51,10 +47,7 @@ IniRead, f15, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F15
 IniRead, f16, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F16
 IniRead, f17, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F17
 IniRead, f18, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F18
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ - CONTROL KEYS
-;~ //////////////////////////////////////////////////////////////
 IniRead, Ctilde, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C~
 IniRead, C1, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C1
 IniRead, C2, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C2
@@ -65,10 +58,7 @@ IniRead, C6, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C6
 IniRead, C7, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C7
 IniRead, C8, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C8
 IniRead, C9, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ - CONTROL+ SHIFT KEYS
-;~ //////////////////////////////////////////////////////////////
 IniRead, Stilde, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S~
 IniRead, S1, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S1
 IniRead, S2, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S2
@@ -79,10 +69,7 @@ IniRead, S6, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S6
 IniRead, S7, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S7
 IniRead, S8, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S8
 IniRead, S9, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ - ALT KEYS
-;~ //////////////////////////////////////////////////////////////
 IniRead, Atilde, %A_AppData%\KeyChain\inifile.ini, AltKeys, A~
 IniRead, A1, %A_AppData%\KeyChain\inifile.ini, AltKeys, A1
 IniRead, A2, %A_AppData%\KeyChain\inifile.ini, AltKeys, A2
@@ -93,10 +80,7 @@ IniRead, A6, %A_AppData%\KeyChain\inifile.ini, AltKeys, A6
 IniRead, A7, %A_AppData%\KeyChain\inifile.ini, AltKeys, A7
 IniRead, A8, %A_AppData%\KeyChain\inifile.ini, AltKeys, A8
 IniRead, A9, %A_AppData%\KeyChain\inifile.ini, AltKeys, A9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ - WINDOWS KEYS
-;~ //////////////////////////////////////////////////////////////
 IniRead, Wtilde, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W~
 IniRead, W1, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W1
 IniRead, W2, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W2
@@ -107,10 +91,7 @@ IniRead, W6, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W6
 IniRead, W7, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W7
 IniRead, W8, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W8
 IniRead, W9, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ -CHECK BOX
-;~ //////////////////////////////////////////////////////////////
 IniRead, ctrl1, %A_AppData%\KeyChain\inifile.ini, Checkbox, ctrl1
 IniRead, alt1, %A_AppData%\KeyChain\inifile.ini, Checkbox, alt1
 IniRead, shift1, %A_AppData%\KeyChain\inifile.ini, Checkbox, shift1
@@ -126,29 +107,19 @@ IniRead, shift4, %A_AppData%\KeyChain\inifile.ini, Checkbox, shift4
 IniRead, ctrl5, %A_AppData%\KeyChain\inifile.ini, Checkbox, ctrl5
 IniRead, alt5, %A_AppData%\KeyChain\inifile.ini, Checkbox, alt5
 IniRead, shift5, %A_AppData%\KeyChain\inifile.ini, Checkbox, shift5
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ -DROPDOWN BOX
-;~ //////////////////////////////////////////////////////////////
 IniRead, dropdown1, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown1
 IniRead, dropdown2, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown2
 IniRead, dropdown3, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown3
 IniRead, dropdown4, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown4
 IniRead, dropdown5, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown5
-
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI READ -String
-;~ //////////////////////////////////////////////////////////////
 IniRead, string1, %A_AppData%\KeyChain\inifile.ini, String, string1
 IniRead, string2, %A_AppData%\KeyChain\inifile.ini, String, string2
 IniRead, string3, %A_AppData%\KeyChain\inifile.ini, String, string3
 IniRead, string4, %A_AppData%\KeyChain\inifile.ini, String, string4
 IniRead, string5, %A_AppData%\KeyChain\inifile.ini, String, string5
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////GUI SETUP - FUNCTION KEYS
-;~ //////////////////////////////////////////////////////////////
 Gui, Add, GroupBox, x30 y9 w175 h560 , Function Keys
 Gui, Add, Text, x42 y29 w30 h20 vtF1, F1
 Gui, Add, Edit, x75 y28 w120 h20 vf1, %F1%
@@ -186,12 +157,7 @@ Gui, Add, Text, x42 y509 w30 h20 , F17
 Gui, Add, Edit, x75 y508 w120 h20 vf17, %F17%
 Gui, Add, Text, x42 y539 w30 h20 , F18
 Gui, Add, Edit, x75 y538 w120 h20 vf18, %F18%
-
-
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////GUI SETUP - CONTROL KEYS
-;~ //////////////////////////////////////////////////////////////
 Gui, Add, GroupBox, x220 y9 w175 h325 , Control Keys
 Gui, Add, Text, x232 y29 w30 h20 , ^~
 Gui, Add, Edit, x265 y28 w120 h20 vctilde, %Ctilde%
@@ -213,10 +179,7 @@ Gui, Add, Text, x232 y269 w30 h20 , ^8
 Gui, Add, Edit, x265 y268 w120 h20 vc8, %C8%
 Gui, Add, Text, x232 y299 w30 h20 , ^9
 Gui, Add, Edit, x265 y298 w120 h20 vc9, %C9%
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////GUI SETUP - CONTROL + SHIFT KEYS
-;~ //////////////////////////////////////////////////////////////
 Gui, Add, GroupBox, x410 y9 w175 h325 , Control + Shift Keys
 Gui, Add, Text, x422 y29 w30 h20 , ^↑~
 Gui, Add, Edit, x455 y28 w120 h20 vstilde, %Stilde%
@@ -238,10 +201,7 @@ Gui, Add, Text, x422 y269 w30 h20 , ^↑8
 Gui, Add, Edit, x455 y268 w120 h20 vs8, %S8%
 Gui, Add, Text, x422 y299 w30 h20 , ^↑9
 Gui, Add, Edit, x455 y298 w120 h20 vs9, %S9%
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////GUI SETUP - ALT KEYS
-;~ //////////////////////////////////////////////////////////////
 Gui, Add, GroupBox, x600 y9 w175 h325 , Alt Keys
 Gui, Add, Text, x612 y29 w30 h20 , ⎇~
 Gui, Add, Edit, x645 y28 w120 h20 vatilde, %Atilde%
@@ -263,10 +223,7 @@ Gui, Add, Text, x612 y269 w30 h20 , ⎇8
 Gui, Add, Edit, x645 y268 w120 h20 va8, %A8%
 Gui, Add, Text, x612 y299 w30 h20 , ⎇9
 Gui, Add, Edit, x645 y298 w120 h20 va9, %A9%
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////GUI SETUP - WINDOWS KEYS
-;~ //////////////////////////////////////////////////////////////
 Gui, Add, GroupBox, x790 y9 w175 h325 , Windows Keys
 Gui, Add, Text, x802 y29 w30 h20 , Ω~
 Gui, Add, Edit, x835 y28 w120 h20 vwtilde, %Wtilde%
@@ -289,10 +246,7 @@ Gui, Add, Edit, x835 y268 w120 h20 vw8, %W8%
 Gui, Add, Text, x802 y299 w30 h20 , Ω9
 Gui, Add, Edit, x835 y298 w120 h20 vw9, %W9%
 
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////GUI SETUP - MISC SETUP
-;~ //////////////////////////////////////////////////////////////
 Menu, Tray, Icon, %A_AppData%/KeyChain/Icon/KeyChain.ico
 Gui, Add, Button, x880 y560 w110 h20 gHide, Hide
 Gui, Add, Button, x740 y560 w110 h20 gsave, Save
@@ -301,31 +255,31 @@ Gui, Add, Button, x740 y560 w110 h20 gsave, Save
 Gui, Add, CheckBox, x250 y370 w50 h20 0 vctrl1, CTRL
 Gui, Add, CheckBox, x305 y370 w40 h20 valt1, ALT
 Gui, Add, CheckBox, x350 y370 w50 h20 vshift1, SHIFT
-Gui, Add, DropDownList, x400 y370 w50 h200 vdropdown1, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
+Gui, Add, DropDownList, x400 y370 w50 h200 vdropdown1, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton|Lbutton|Rbutton
 Gui, Add, Edit, x475 y370 w120 h20 vstring1, %string1%
 
 Gui, Add, CheckBox, x250 y410 w50 h20 vctrl2, CTRL
 Gui, Add, CheckBox, x305 y410 w40 h20 valt2, ALT
 Gui, Add, CheckBox, x350 y410 w50 h20 vshift2, SHIFT
-Gui, Add, DropDownList, x400 y410 w50 h200 vdropdown2, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
+Gui, Add, DropDownList, x400 y410 w50 h200 vdropdown2, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton|Lbutton|Rbutton
 Gui, Add, Edit, x475 y410 w120 h20 vstring2, %string2%
 
 Gui, Add, CheckBox, x250 y450 w50 h20 vctrl3, CTRL
 Gui, Add, CheckBox, x305 y450 w40 h20 valt3, ALT
 Gui, Add, CheckBox, x350 y450 w50 h20 vshift3, SHIFT
-Gui, Add, DropDownList, x400 y450 w50 h200 vdropdown3, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
+Gui, Add, DropDownList, x400 y450 w50 h200 vdropdown3, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton|Lbutton|Rbutton
 Gui, Add, Edit, x475 y450 w120 h20 vstring3, %string3%
 
 Gui, Add, CheckBox, x250 y490 w50 h20 vctrl4, CTRL
 Gui, Add, CheckBox, x305 y490 w40 h20 valt4, ALT
 Gui, Add, CheckBox, x350 y490 w50 h20 vshift4, SHIFT
-Gui, Add, DropDownList, x400 y490 w50 h200 vdropdown4, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
+Gui, Add, DropDownList, x400 y490 w50 h200 vdropdown4, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton|Lbutton|Rbutton
 Gui, Add, Edit, x475 y490 w120 h20 vstring4, %string4%
 
 Gui, Add, CheckBox, x250 y530 w50 h20 vctrl5, CTRL
 Gui, Add, CheckBox, x305 y530 w40 h20 valt5, ALT
 Gui, Add, CheckBox, x350 y530 w50 h20 vshift5, SHIFT
-Gui, Add, DropDownList, x400 y530 w50 h200 vdropdown5, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton
+Gui, Add, DropDownList, x400 y530 w50 h200 vdropdown5, Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton|Lbutton|Rbutton
 Gui, Add, Edit, x475 y530 w120 h20 vstring5, %string5%
 
 
@@ -351,7 +305,14 @@ guiControl, ChooseString, dropdown3, %dropdown3%
 guiControl, ChooseString, dropdown4, %dropdown4%
 guiControl, ChooseString, dropdown5, %dropdown5%
 
-if dropdown1 != null
+dd1=
+dd2=
+dd3=
+dd4=
+dd5=
+
+
+if (dropdown1 != "Null" and string2 != "")
 		{
 				if(ctrl1=1)
 			{
@@ -370,7 +331,7 @@ if dropdown1 != null
 			Hotkey, %prestring%%dropdown1%, hotkey1, On
 			prestring=
 		}
-if dropdown2 != null
+if (dropdown2 != "Null" and string2 != "")
 		{
 				if(ctrl2=1)
 			{
@@ -389,7 +350,7 @@ if dropdown2 != null
 			Hotkey, %prestring%%dropdown2%, hotkey2, On
 			prestring=
 		}
-if dropdown3 != null
+if (dropdown3 != "Null" and string2 != "")
 		{
 				if(ctrl3=1)
 			{
@@ -408,7 +369,7 @@ if dropdown3 != null
 			Hotkey, %prestring%%dropdown3%, hotkey3, On
 			prestring=
 		}
-if dropdown4 != null
+if (dropdown4 != "Null" and string2 != "")
 		{
 				if(ctrl4=1)
 			{
@@ -427,7 +388,7 @@ if dropdown4 != null
 			Hotkey, %prestring%%dropdown4%, hotkey4, On
 			prestring=
 		}
-if dropdown5 != null
+if (dropdown5 != "Null" and string2 != "")
 		{
 				if(ctrl5=1)
 			{
@@ -453,7 +414,7 @@ Loop, %A_AppData%\KeyChain\Scripts\*.*
   LV_ModifyCol(2, 50)
   LV_ModifyCol(1, 225)
   LV_ModifyCol(2, "SortDesc")
-		
+SplashTextOff		
 Gui, Show, w1000 h600, KeyChain
 Menu, Tray, Add, Reset Config, ResetConfig
 Menu, Tray, Add, Help Documentation, help
@@ -461,12 +422,6 @@ Menu, Tray, Add, AHK Keys Guide, ahkkeys
 Menu, Tray, Add, Update Scripts, UpdateScripts
 Menu, Tray, Add, Show Interface, ShowGui
 return
-;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ;~ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -516,24 +471,24 @@ return
 hotkey1:
 send, %string1%
 return
-
 hotkey2:
 send, %string2%
 return
-
 hotkey3:
 send, %string3%
 return
-
 hotkey4:
 send, %string4%
 return
-
 hotkey5:
 send, %string5%
 return
 
 UpdateScripts:
+FileRemoveDir,  %A_AppData%\KeyChain\Scripts.old\, 1
+FileCopyDir, %A_AppData%\KeyChain\Scripts\, %A_AppData%\KeyChain\Scripts.old\
+FileRemoveDir, %A_AppData%\KeyChain\Scripts\, 1
+FileCreateDir, %A_AppData%\KeyChain\Scripts\
 Loop, Z:\Development\KeyChain\Scripts\*.*
 {
    step = %A_Index%
@@ -573,21 +528,16 @@ HideTrayTip() {
 }
 
 
-
 Hide:
 WinHide
+TrayTip KeyChain, Hidden but not closed!
+Sleep 2500   ; Let it display for 3 seconds.
+HideTrayTip()
 return
 
-Save:
-;~ Hotkey, %dropdown1%, Off
-;~ Hotkey, %dropdown2%, Off
-;~ Hotkey, %dropdown3%, Off
-;~ Hotkey, %dropdown4%, Off
-;~ Hotkey, %dropdown5%, Off
 
-;~ //////////////////////////////////////////////////////////////
+Save:
 ;~ ////////////////////////READ VARIABLES - FUNCTION KEYS
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, f1 ,, f1
 GuiControlGet, f2 ,, f2
 GuiControlGet, f3 ,, f3
@@ -606,10 +556,7 @@ GuiControlGet, f15 ,, f15
 GuiControlGet, f16 ,, f16
 GuiControlGet, f17 ,, f17
 GuiControlGet, f18 ,, f18
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////READ VARIABLES - CONTROL KEYS
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, ctilde ,, Ctilde
 GuiControlGet, c1 ,, C1
 GuiControlGet, c2 ,, C2
@@ -620,10 +567,7 @@ GuiControlGet, c6 ,, C6
 GuiControlGet, c7 ,, C7
 GuiControlGet, c8 ,, C8
 GuiControlGet, c9 ,, C9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////READ VARIABLES - CONTROL + SHIFT KEYS
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, stilde ,, stilde
 GuiControlGet, s1 ,, s1
 GuiControlGet, s2 ,, s2
@@ -634,10 +578,7 @@ GuiControlGet, s6 ,, s6
 GuiControlGet, s7 ,, s7
 GuiControlGet, s8 ,, s8
 GuiControlGet, s9 ,, s9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////READ VARIABLES - ALT KEYS
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, atilde ,, atilde
 GuiControlGet, a1 ,, a1
 GuiControlGet, a2 ,, a2
@@ -648,10 +589,7 @@ GuiControlGet, a6 ,, a6
 GuiControlGet, a7 ,, a7
 GuiControlGet, a8 ,, a8
 GuiControlGet, a9 ,, a9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////READ VARIABLES - WINDOWS KEYS
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, wtilde ,, wtilde
 GuiControlGet, w1 ,, w1
 GuiControlGet, w2 ,, w2
@@ -662,10 +600,7 @@ GuiControlGet, w6 ,, w6
 GuiControlGet, w7 ,, w7
 GuiControlGet, w8 ,, w8
 GuiControlGet, w9 ,, w9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////READ VARIABLES - CHECKBOX
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, ctrl1 ,, ctrl1
 GuiControlGet, alt1 ,, alt1
 GuiControlGet, shift1 ,, shift1
@@ -681,28 +616,19 @@ GuiControlGet, shift4 ,, shift4
 GuiControlGet, ctrl5 ,, ctrl5
 GuiControlGet, alt5 ,, alt5
 GuiControlGet, shift5 ,, shift5
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////READ VARIABLES - Dropdown
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, dropdown1 ,, dropdown1
 GuiControlGet, dropdown2 ,, dropdown2
 GuiControlGet, dropdown3 ,, dropdown3
 GuiControlGet, dropdown4 ,, dropdown4
 GuiControlGet, dropdown5 ,, dropdown5
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////READ VARIABLES - String
-;~ //////////////////////////////////////////////////////////////
 GuiControlGet, string1 ,, string1
 GuiControlGet, string2 ,, string2
 GuiControlGet, string3 ,, string3
 GuiControlGet, string4 ,, string4
 GuiControlGet, string5 ,, string5
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - FUNCTION KEYS
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %f1%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F1
 IniWrite, %f2%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F2
 IniWrite, %f3%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F3
@@ -721,10 +647,7 @@ IniWrite, %f15%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F15
 IniWrite, %f16%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F16
 IniWrite, %f17%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F17
 IniWrite, %f18%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F18
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - CONTROL KEYS
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %Ctilde%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C~
 IniWrite, %C1%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C1
 IniWrite, %C2%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C2
@@ -735,10 +658,7 @@ IniWrite, %C6%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C6
 IniWrite, %C7%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C7
 IniWrite, %C8%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C8
 IniWrite, %C9%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - CONTROL + SHIFT KEYS
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %Stilde%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S~
 IniWrite, %S1%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S1
 IniWrite, %S2%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S2
@@ -749,10 +669,7 @@ IniWrite, %S6%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S6
 IniWrite, %S7%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S7
 IniWrite, %S8%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S8
 IniWrite, %S9%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - ALT KEYS
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %Atilde%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A~
 IniWrite, %A1%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A1
 IniWrite, %A2%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A2
@@ -763,10 +680,7 @@ IniWrite, %A6%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A6
 IniWrite, %A7%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A7
 IniWrite, %A8%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A8
 IniWrite, %A9%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - WINDOWS KEYS
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %Wtilde%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W~
 IniWrite, %W1%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W1
 IniWrite, %W2%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W2
@@ -777,10 +691,7 @@ IniWrite, %W6%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W6
 IniWrite, %W7%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W7
 IniWrite, %W8%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W8
 IniWrite, %W9%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W9
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - CHECK BOX
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %ctrl1%, %A_AppData%\KeyChain\inifile.ini, Checkbox, ctrl1
 IniWrite, %alt1%, %A_AppData%\KeyChain\inifile.ini, Checkbox, alt1
 IniWrite, %shift1%, %A_AppData%\KeyChain\inifile.ini, Checkbox, shift1
@@ -796,1045 +707,225 @@ IniWrite, %shift4%, %A_AppData%\KeyChain\inifile.ini, Checkbox, shift4
 IniWrite, %ctrl5%, %A_AppData%\KeyChain\inifile.ini, Checkbox, ctrl5
 IniWrite, %alt5%, %A_AppData%\KeyChain\inifile.ini, Checkbox, alt5
 IniWrite, %shift5%, %A_AppData%\KeyChain\inifile.ini, Checkbox, shift5
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - Dropdown
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %dropdown1%, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown1
 IniWrite, %dropdown2%, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown2
 IniWrite, %dropdown3%, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown3
 IniWrite, %dropdown4%, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown4
 IniWrite, %dropdown5%, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown5
-
-;~ //////////////////////////////////////////////////////////////
 ;~ ////////////////////////INI WRITE - String
-;~ //////////////////////////////////////////////////////////////
 IniWrite, %String1%, %A_AppData%\KeyChain\inifile.ini, String, String1
 IniWrite, %String2%, %A_AppData%\KeyChain\inifile.ini, String, String2
 IniWrite, %String3%, %A_AppData%\KeyChain\inifile.ini, String, String3
 IniWrite, %String4%, %A_AppData%\KeyChain\inifile.ini, String, String4
 IniWrite, %String5%, %A_AppData%\KeyChain\inifile.ini, String, String5
-prestring=
-if dropdown1 != null
-		{
-				if(ctrl1=1)
-			{
-				prestring =%prestring%^
-			}
-			else
-				prestring=
-			if(shift1=1)
-			{
-				prestring =%prestring%+
-			}
-			if(alt1=1)
-			{
-				prestring =%prestring%!
-			}
-			Hotkey, %prestring%%dropdown1%, hotkey1, On
-			prestring=
-		}
-if dropdown2 != null
-		{
-				if(ctrl2=1)
-			{
-				prestring =%prestring%^
-			}
-			else
-				prestring=
-			if(shift2=1)
-			{
-				prestring =%prestring%+
-			}
-			if(alt2=1)
-			{
-				prestring =%prestring%!
-			}
-			Hotkey, %prestring%%dropdown2%, hotkey2, On
-			prestring=
-		}
-if dropdown3 != null
-		{
-				if(ctrl3=1)
-			{
-				prestring =%prestring%^
-			}
-			else
-				prestring=
-			if(shift3=1)
-			{
-				prestring =%prestring%+
-			}
-			if(alt3=1)
-			{
-				prestring =%prestring%!
-			}
-			Hotkey, %prestring%%dropdown3%, hotkey3, On
-			prestring=
-		}
-if dropdown4 != null
-		{
-				if(ctrl4=1)
-			{
-				prestring =%prestring%^
-			}
-			else
-				prestring=
-			if(shift4=1)
-			{
-				prestring =%prestring%+
-			}
-			if(alt4=1)
-			{
-				prestring =%prestring%!
-			}
-			Hotkey, %prestring%%dropdown4%, hotkey4, On
-			prestring=
-		}
-if dropdown5 != null
-		{
-				if(ctrl5=1)
-			{
-				prestring =%prestring%^
-			}
-			else
-				prestring=
-			if(shift5=1)
-			{
-				prestring =%prestring%+
-			}
-			if(alt5=1)
-			{
-				prestring =%prestring%!
-			}
-			Hotkey, %prestring%%dropdown5%, hotkey5, On
-			prestring=
-		}
 
-FormatTime, CurrentDateTime,, MM-dd-yy hh:mm
-Gui, Show, , KeyChain                                                                                                                                                                                                           Last Saved at %CurrentDateTime%
+
+TrayTip KeyChain, Settings Saved! Reloading.
+Sleep 2000
+reload
 return
 
+
+ExecuteAction(string_name, string_contents)
+{
+	if !string_contents
+	{
+		hotkey, %string_name%, Off		
+		;~ send, {%string_name%}
+		hotkey, %string_name%, On
+		return
+	}
+	else
+IfInString, string_contents, Script
+{
+	StringSplit, ScriptArray, string_contents, %A_Space%,
+    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
+    return
+}
+else
+send, %string_contents%
+}
 
 
 F1::
-	if !F1
-	{
-		hotkey, F1, Off		
-		send, {F1}
-	}
-	else
-IfInString, F1, Script
-{
-	StringSplit, ScriptArray, F1, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f1%
-		hotkey, F1, On
+ExecuteAction("F1", F1)
 return
-
 F2::
-	if !F2
-	{
-		hotkey, F2, Off
-		send, {F2}
-	}
-	else
-IfInString, F2, Script
-{
-	StringSplit, ScriptArray, F2, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f2%
-		hotkey, F2, On
+ExecuteAction("F2", F2)
 return
-
-
-
 F3::
-	if !F3
-	{
-		hotkey, F3, Off
-		send, {F3}
-	}
-	else
-IfInString, F3, Script
-{
-	StringSplit, ScriptArray, F3, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f3%
-		hotkey, F3, On
+ExecuteAction("F3", F4)
 return
-
 F4::
-	if !F4
-	{
-		hotkey, F4, Off
-		send, {F4}
-	}
-	else
-IfInString, F4, Script
-{
-	StringSplit, ScriptArray, F4, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f4%
-		hotkey, F4, On
+ExecuteAction("F4", F4)
 return
-
 F5::
-	if !F5
-	{
-		hotkey, F5, Off
-		send, {F5}
-	}
-	else
-IfInString, F5, Script
-{
-	StringSplit, ScriptArray, F5, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f5%
-		hotkey, F5, On
+ExecuteAction("F5", F5)
 return
-
-
 F6::
-	if !F6
-	{
-		hotkey, F6, Off
-		send, {F6}
-	}
-	else
-IfInString, F6, Script
-{
-	StringSplit, ScriptArray, F6, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f6%
-		hotkey, F6, On
+ExecuteAction("F6", F6)
 return
-
 F7::
-	if !F7
-	{
-		hotkey, F7, Off
-		send, {F7}
-	}
-	else
-IfInString, F7, Script
-{
-	StringSplit, ScriptArray, F7, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f7%
-		hotkey, F7, On
+ExecuteAction("F7", F7)
 return
-
 F8::
-	if !F8
-	{
-		hotkey, F8, Off
-		send, {F8}
-	}
-	else
-IfInString, F8, Script
-{
-	StringSplit, ScriptArray, F8, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f8%
-		hotkey, F8, On
+ExecuteAction("F8", F8)
 return
-
 F9::
-	if !F9
-	{
-		hotkey, F9, Off
-		send, {F9}
-	}
-	else
-IfInString, F9, Script
-{
-	StringSplit, ScriptArray, F9, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f9%
-		hotkey, F9, On
+ExecuteAction("F9", F9)
 return
-
-
 F10::
-	if !F10
-	{
-		hotkey, F10, Off
-		send {F10}
-	}
-	else
-IfInString, F10, Script
-{
-	StringSplit, ScriptArray, F10, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f10%
-		hotkey, F10, On
+ExecuteAction("F10", F10)
 return
-
 F11::
-	if !F11
-	{
-		hotkey, F11, Off
-		send {F11}
-	}
-	else
-
-IfInString, F11, Script
-{
-	StringSplit, ScriptArray, F11, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f11%
-		hotkey, F11, On
+ExecuteAction("F11", F11)
 return
-
-
 F13::
-;~ send, {escape 2}^n
-IfInString, F13, Script
-{
-	StringSplit, ScriptArray, F13, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f13%
+ExecuteAction("F13", F13)
 return
-
 F14::
-;~ send, {escape 2}3
-IfInString, F14, Script
-{
-	StringSplit, ScriptArray, F14, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f14%
+ExecuteAction("F14", F14)
 return
-
 F15::
-;~ send, {escape 2}t
-IfInString, F15, Script
-{
-	StringSplit, ScriptArray, F15, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f15%
+ExecuteAction("F15", F15)
 return
-
 F16::
-;~ send, {escape 2}d{BackSpace}0{Enter}
-IfInString, F16, Script
-{
-	StringSplit, ScriptArray, F16, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f16%
+ExecuteAction("F16", F16)
 return
-
 F17::
-;~ send, {escape 2}1{BackSpace}0{Enter}
-IfInString, F17, Script
-{
-	StringSplit, ScriptArray, F17, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f17%
+ExecuteAction("F17", F17)
+return
+F18::
+ExecuteAction("F18", F18)
 return
 
-F18::
-;~ send, {escape 2}{Shift}{L}
-IfInString, F18, Script
-{
-	StringSplit, ScriptArray, F18, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %f18%
-return
 
 ^`::
-	if !Ctilde
-	{
-		send, {^`}
-	}
-	else
-IfInString, Ctilde, Script
-{
-	StringSplit, ScriptArray, Ctilde, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %Ctilde%
+ExecuteAction("^`", Ctilde)
 return
-
-
 ^1::
-	if !C1
-	{
-		send, {^1}
-	}
-	else
-IfInString, C1, Script
-{
-	StringSplit, ScriptArray, C1, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C1%
+ExecuteAction("^1", C1)
 RETURN
-
 ^2::
-	if !C2
-	{
-		send, {^2}
-	}
-	else
-IfInString, C2, Script
-{
-	StringSplit, ScriptArray, C2, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C2%
+ExecuteAction("^2", C2)
 RETURN
-
 ^3::
-	if !C3
-	{
-		send, {^3}
-	}
-	else
-IfInString, C3, Script
-{
-	StringSplit, ScriptArray, C3, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C3%
+ExecuteAction("^3", C3)
 RETURN
-
 ^4::
-	if !C4
-	{
-		send, {^4}
-	}
-	else
-IfInString, C4, Script
-{
-	StringSplit, ScriptArray, C4, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C4%
+ExecuteAction("^4", C4)
 RETURN
-
 ^5::
-	if !C5
-	{
-		send, {^5}
-	}
-	else
-IfInString, C5, Script
-{
-	StringSplit, ScriptArray, C5, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C5%
+ExecuteAction("^5", C5)
 RETURN
-
 ^6::
-	if !C6
-	{
-		send, {^6}
-	}
-	else
-IfInString, C6, Script
-{
-	StringSplit, ScriptArray, C6, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C6%
+ExecuteAction("^6", C6)
 RETURN
-
 ^7::
-	if !C7
-	{
-		send, {^7}
-	}
-	else
-IfInString, C7, Script
-{
-	StringSplit, ScriptArray, C7, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C7%
+ExecuteAction("^7", C7)
 RETURN
-
 ^8::
-	if !C8
-	{
-		send, {^8}
-	}
-	else
-IfInString, C8, Script
-{
-	StringSplit, ScriptArray, C8, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C8%
+ExecuteAction("^8", C8)
 RETURN
-
 ^9::
-	if !C9
-	{
-		send, {^9}
-	}
-	else
-IfInString, C9, Script
-{
-	StringSplit, ScriptArray, C9, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %C9%
+ExecuteAction("^9", C9)
 RETURN
 
 
 ^+`::
-	if !Stilde
-	{
-		send, {^+`}
-	}
-	else
-IfInString, Stilde, Script
-{
-	StringSplit, ScriptArray, Stilde, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %Stilde%
+ExecuteAction("^+`", Stilde)
 RETURN
-
 ^+1::
-	if !S1
-	{
-		send, {^+1}
-	}
-	else
-IfInString, S1, Script
-{
-	StringSplit, ScriptArray, S1, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S1%
+ExecuteAction("^+1", S1)
 RETURN
-
 ^+2::
-	if !S2
-	{
-		send, {^+2}
-	}
-	else
-IfInString, S2, Script
-{
-	StringSplit, ScriptArray, S2, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S2%
+ExecuteAction("^+1", S1)
 RETURN
-
 ^+3::
-	if !S3
-	{
-		send, {^+3}
-	}
-	else
-IfInString, S3, Script
-{
-	StringSplit, ScriptArray, S3, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S3%
+ExecuteAction("^+2", S2)
 RETURN
-
 ^+4::
-	if !S4
-	{
-		send, {^+4}
-	}
-	else
-IfInString, S4, Script
-{
-	StringSplit, ScriptArray, S4, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S4%
+ExecuteAction("^+3", S3)
 RETURN
-
 ^+5::
-	if !S5
-	{
-		send, {^+5}
-	}
-	else
-IfInString, S5, Script
-{
-	StringSplit, ScriptArray, S5, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S5%
+ExecuteAction("^+5", S4)
 RETURN
-
 ^+6::
-	if !S6
-	{
-		send, {^+6}
-	}
-	else
-IfInString, S6, Script
-{
-	StringSplit, ScriptArray, S6, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S6%
+ExecuteAction("^+6", S6)
 RETURN
-
 ^+7::
-	if !S7
-	{
-		send, {^+7}
-	}
-	else
-IfInString, S7, Script
-{
-	StringSplit, ScriptArray, S7, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S7%
+ExecuteAction("^+7", S7)
 RETURN
-
 ^+8::
-	if !S8
-	{
-		send, {^+8}
-	}
-	else
-IfInString, S8, Script
-{
-	StringSplit, ScriptArray, S8, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S8%
+ExecuteAction("^+8", S8)
 RETURN
-
 ^+9::
-	if !S9
-	{
-		send, {^+9}
-	}
-	else
-IfInString, S9, Script
-{
-	StringSplit, ScriptArray, S9, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %S9%
+ExecuteAction("^+9", S9)
 RETURN
 
 
 !`::
-	if !Atilde
-	{
-		send, {Lalt Down}`{Lalt Up}
-	}
-	else
-IfInString, Atilde, Script
-{
-	StringSplit, ScriptArray, Atilde, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %Atilde%
+ExecuteAction("!`", Atilde)
 RETURN
-
 !1::
-	if !A1
-	{
-		send, {!1}
-	}
-	else
-IfInString, A1, Script
-{
-	StringSplit, ScriptArray, A1, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A1%
+ExecuteAction("!1", A1)
 RETURN
-
 !2::
-	if !A2
-	{
-		send, {!2}
-	}
-	else
-IfInString, A2, Script
-{
-	StringSplit, ScriptArray, A2, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A2%
+ExecuteAction("!2", A2)
 RETURN
-
 !3::
-	if !A3
-	{
-		send, {!3}
-	}
-	else
-IfInString, A3, Script
-{
-	StringSplit, ScriptArray, A3, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A3%
+ExecuteAction("!3", A3)
 RETURN
-
 !4::
-	if !A4
-	{
-		send, {!4}
-	}
-	else
-IfInString, A4, Script
-{
-	StringSplit, ScriptArray, A4, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A4%
+ExecuteAction("!4", A4)
 RETURN
-
 !5::
-	if !A5
-	{
-		send, {!5}
-	}
-	else
-IfInString, A5, Script
-{
-	StringSplit, ScriptArray, A5, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A5%
+ExecuteAction("!5", A5)
 RETURN
-
 !6::
-	if !A6
-	{
-		send, {!6}
-	}
-	else
-IfInString, A6, Script
-{
-	StringSplit, ScriptArray, A6, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A6%
+ExecuteAction("!6", A6)
 RETURN
-
 !7::
-	if !A7
-	{
-		send, {!7}
-	}
-	else
-IfInString, A7, Script
-{
-	StringSplit, ScriptArray, A7, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A7%
+ExecuteAction("!7", A7)
 RETURN
-
 !8::
-	if !A8
-	{
-		send, {!8}
-	}
-	else
-IfInString, A8, Script
-{
-	StringSplit, ScriptArray, A8, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A8%
+ExecuteAction("!8", A8)
 RETURN
-
 !9::
-	if !A9
-	{
-		send, {!9}
-	}
-	else
-IfInString, A9, Script
-{
-	StringSplit, ScriptArray, A9, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %A9%
+ExecuteAction("!9", A9)
 RETURN
 
 
 #`::
-	if !Wtilde
-	{
-		send, {LWin Down}`{LWin Up}
-	}
-	else
-IfInString, Wtilde, Script
-{
-	StringSplit, ScriptArray, Wtilde, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %Wtilde%
+ExecuteAction("#`", Wtilde)
 RETURN
-
 #1::
-	if !W1
-	{
-		send, {LWin Down}1{LWin Up}
-	}
-	else
-IfInString, W1, Script
-{
-	StringSplit, ScriptArray, W1, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W1%
+ExecuteAction("#1", W1)
 RETURN
-
 #2::
-	if !W2
-	{
-		send, {LWin Down}2{LWin Up}
-	}
-	else
-IfInString, W2, Script
-{
-	StringSplit, ScriptArray, W2, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W2%
+ExecuteAction("#2", W2)
 RETURN
-
 #3::
-	if !W3
-	{
-		send, {LWin Down}3{LWin Up}
-	}
-	else
-IfInString, W3, Script
-{
-	StringSplit, ScriptArray, W3, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W3%
+ExecuteAction("#3", W3)
 RETURN
-
 #4::
-	if !W4
-	{
-		send, {LWin Down}4{LWin Up}
-	}
-	else
-IfInString, W4, Script
-{
-	StringSplit, ScriptArray, W4, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W4%
+ExecuteAction("#4", W4)
 RETURN
-
 #5::
-	if !W5
-	{
-		send, {LWin Down}5{LWin Up}
-	}
-	else
-IfInString, W5, Script
-{
-	StringSplit, ScriptArray, W5, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W5%
+ExecuteAction("#5", W5)
 RETURN
-
 #6::
-	if !W6
-	{
-		send, {LWin Down}6{LWin Up}
-	}
-	else
-IfInString, W6, Script
-{
-	StringSplit, ScriptArray, W6, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W6%
+ExecuteAction("#6", W6)
 RETURN
-
 #7::
-	if !W7
-	{
-		send, {LWin Down}7{LWin Up}
-	}
-	else
-IfInString, W7, Script
-{
-	StringSplit, ScriptArray, W7, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W7%
+ExecuteAction("#7", W7)
 RETURN
-
 #8::
-	if !W8
-	{
-		send, {LWin Down}8{LWin Up}
-	}
-	else
-IfInString, W8, Script
-{
-	StringSplit, ScriptArray, w8, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W8%
+ExecuteAction("#8", W8)
 RETURN
-
 #9::
-	if !W9
-	{
-		send, {LWin Down}9{LWin Up}
-	}
-	else
-IfInString, W9, Script
-{
-	StringSplit, ScriptArray, w9, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
-    return
-}
-else
-send, %W9%
+ExecuteAction("#9", W9)
 RETURN
 
 
