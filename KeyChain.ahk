@@ -350,7 +350,7 @@ if (dropdown2 != "Null" and string2 != "")
 			Hotkey, %prestring%%dropdown2%, hotkey2, On
 			prestring=
 		}
-if (dropdown3 != "Null" and string2 != "")
+if (dropdown3 != "Null" and string3 != "")
 		{
 				if(ctrl3=1)
 			{
@@ -369,7 +369,7 @@ if (dropdown3 != "Null" and string2 != "")
 			Hotkey, %prestring%%dropdown3%, hotkey3, On
 			prestring=
 		}
-if (dropdown4 != "Null" and string2 != "")
+if (dropdown4 != "Null" and string4 != "")
 		{
 				if(ctrl4=1)
 			{
@@ -388,7 +388,7 @@ if (dropdown4 != "Null" and string2 != "")
 			Hotkey, %prestring%%dropdown4%, hotkey4, On
 			prestring=
 		}
-if (dropdown5 != "Null" and string2 != "")
+if (dropdown5 != "Null" and string5 != "")
 		{
 				if(ctrl5=1)
 			{
