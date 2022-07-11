@@ -10,10 +10,15 @@ Support for simple strings, AHK formatted keys, and external executable's or ahk
 
 
 Sends plain text
+
 Executes .AHK scripts and .exe applications
+
 Sends AHK key mapping
+
 Support 5 plain text / key mappings
+
 Script repository is now listed on the bottom right.
+
 ![KeyChain Help](https://user-images.githubusercontent.com/32394719/178319097-d7a6e608-d705-40dc-8dbc-d3390553d859.png)
 
 Usage:
