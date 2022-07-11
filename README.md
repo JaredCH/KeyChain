@@ -11,7 +11,7 @@ Support for simple strings, AHK formatted keys, and external executable's or ahk
 # Features
 - Sends plain text
 - Executes .AHK scripts and .exe applications
-- Sends AHK key mapping
+- Sends [AHK key mapping](https://www.autohotkey.com/docs/commands/Send.htm).
 - Support 5 plain text / key mappings
 - Script repository is now listed on the bottom right.
 
