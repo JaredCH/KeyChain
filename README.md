@@ -8,16 +8,12 @@ This tool is a simple passion project for my needs regarding CAD/Omniwin, J D Ed
 Support for simple strings, AHK formatted keys, and external executable's or ahk scripts.
 ![KeyChain](https://user-images.githubusercontent.com/32394719/178035093-235c7b7c-9987-4681-9fdb-ddf3327acd37.PNG)
 
-
-Sends plain text
-
-Executes .AHK scripts and .exe applications
-
-Sends AHK key mapping
-
-Support 5 plain text / key mappings
-
-Script repository is now listed on the bottom right.
+# Features
+## Sends plain text
+## Executes .AHK scripts and .exe applications
+## Sends AHK key mapping
+## Support 5 plain text / key mappings
+## Script repository is now listed on the bottom right.
 
 ![KeyChain Help](https://user-images.githubusercontent.com/32394719/178319097-d7a6e608-d705-40dc-8dbc-d3390553d859.png)
 
