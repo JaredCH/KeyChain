@@ -305,11 +305,6 @@ guiControl, ChooseString, dropdown3, %dropdown3%
 guiControl, ChooseString, dropdown4, %dropdown4%
 guiControl, ChooseString, dropdown5, %dropdown5%
 
-dd1=
-dd2=
-dd3=
-dd4=
-dd5=
 
 
 if (dropdown1 != "Null" and string1 != "")
@@ -415,6 +410,7 @@ Loop, %A_AppData%\KeyChain\Scripts\*.*
   LV_ModifyCol(1, 225)
   LV_ModifyCol(2, "SortDesc")
 SplashTextOff		
+toggle := "OFF"
 Gui, Show, w1000 h600, KeyChain
 Menu, Tray, Add, Reset Config, ResetConfig
 Menu, Tray, Add, Help Documentation, help
@@ -737,15 +733,70 @@ ExecuteAction(string_name, string_contents)
 		return
 	}
 	else
+IfInString, string_contents, Click
+{
+	StringSplit, ScriptArray, string_contents, %A_Space%,
+    MouseClick, Left, %ScriptArray2%, %ScriptArray3%
+    return
+}
+	else
 IfInString, string_contents, Script
 {
 	StringSplit, ScriptArray, string_contents, %A_Space%,
     Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
     return
 }
+	else
+IfInString, string_contents, Internal
+{
+	StringSplit, ScriptArray, string_contents, %A_Space%,
+    gosub, %ScriptArray2%
+    return
+}
 else
+	IfInString, string_contents, Run
+{
+	StringSplit, ScriptArray, string_contents, %A_Space%,
+    Run, %ScriptArray2%
+    return
+}
+else
+	IfInString, string_contents, Google
+{
+	oldclip :=clipboard
+	 Send, ^c
+	Sleep 50
+    Run, https://www.google.com/search?q=%clipboard%
+	clipboard := oldclip
+    return
+}
+else
+
+
 send, %string_contents%
 }
+
+
+ShowXY:
+global toggle
+ if (toggle = "OFF")
+{
+	toggle := "ON"
+	SetTimer, WatchCursor, 100
+}
+else
+{
+	toggle := "OFF"
+	SetTimer, WatchCursor, Off
+	ToolTip
+}
+RETURN
+
+
+WatchCursor:
+MouseGetPos, xpos, ypos
+ToolTip, %xpos% : %ypos%
+return
 
 
 F1::
@@ -929,15 +980,9 @@ ExecuteAction("#9", W9)
 RETURN
 
 
-	GuiClose:
-  MSGBox, 36, KeyChain, Would you like to save any changes?
-  IfMsgBox, No 
-    ExitApp 
-  Else
-    GoSub, Save
-		ExitApp
-Return
-	ExitApp
+GuiClose:
+ExitApp
+
 	
 
 
