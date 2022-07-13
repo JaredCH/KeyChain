@@ -509,181 +509,67 @@ MouseGetPos, xpos, ypos
 ToolTip, %xpos% : %ypos%
 return
 
-F1::
-ExecuteAction("F1", F1)
-return
-F2::
-ExecuteAction("F2", F2)
-return
-F3::
-ExecuteAction("F3", F4)
-return
-F4::
-ExecuteAction("F4", F4)
-return
-F5::
-ExecuteAction("F5", F5)
-return
-F6::
-ExecuteAction("F6", F6)
-return
-F7::
-ExecuteAction("F7", F7)
-return
-F8::
-ExecuteAction("F8", F8)
-return
-F9::
-ExecuteAction("F9", F9)
-return
-F10::
-ExecuteAction("F10", F10)
-return
-F11::
-ExecuteAction("F11", F11)
-return
-F13::
-ExecuteAction("F13", F13)
-return
-F14::
-ExecuteAction("F14", F14)
-return
-F15::
-ExecuteAction("F15", F15)
-return
-F16::
-ExecuteAction("F16", F16)
-return
-F17::
-ExecuteAction("F17", F17)
-return
-F18::
-ExecuteAction("F18", F18)
-return
+F1::ExecuteAction("F1", F1)
+F2::ExecuteAction("F2", F2)
+F3::ExecuteAction("F3", F4)
+F4::ExecuteAction("F4", F4)
+F5::ExecuteAction("F5", F5)
+F6::ExecuteAction("F6", F6)
+F7::ExecuteAction("F7", F7)
+F8::ExecuteAction("F8", F8)
+F9::ExecuteAction("F9", F9)
+F10::ExecuteAction("F10", F10)
+F11::ExecuteAction("F11", F11)
+F13::ExecuteAction("F13", F13)
+F14::ExecuteAction("F14", F14)
+F15::ExecuteAction("F15", F15)
+F16::ExecuteAction("F16", F16)
+F17::ExecuteAction("F17", F17)
+F18::ExecuteAction("F18", F18)
 
-^`::
-ExecuteAction("^`", Ctilde)
-return
-^1::
-ExecuteAction("^1", C1)
-RETURN
-^2::
-ExecuteAction("^2", C2)
-RETURN
-^3::
-ExecuteAction("^3", C3)
-RETURN
-^4::
-ExecuteAction("^4", C4)
-RETURN
-^5::
-ExecuteAction("^5", C5)
-RETURN
-^6::
-ExecuteAction("^6", C6)
-RETURN
-^7::
-ExecuteAction("^7", C7)
-RETURN
-^8::
-ExecuteAction("^8", C8)
-RETURN
-^9::
-ExecuteAction("^9", C9)
-RETURN
+^`::ExecuteAction("^`", Ctilde)
+^1::ExecuteAction("^1", C1)
+^2::ExecuteAction("^2", C2)
+^3::ExecuteAction("^3", C3)
+^4::ExecuteAction("^4", C4)
+^5::ExecuteAction("^5", C5)
+^6::ExecuteAction("^6", C6)
+^7::ExecuteAction("^7", C7)
+^8::ExecuteAction("^8", C8)
+^9::ExecuteAction("^9", C9)
 
-^+`::
-ExecuteAction("^+`", Stilde)
-RETURN
-^+1::
-ExecuteAction("^+1", S1)
-RETURN
-^+2::
-ExecuteAction("^+2", S2)
-RETURN
-^+3::
-ExecuteAction("^+3", S3)
-RETURN
-^+4::
-ExecuteAction("^+4", S4)
-RETURN
-^+5::
-ExecuteAction("^+5", S5)
-RETURN
-^+6::
-ExecuteAction("^+6", S6)
-RETURN
-^+7::
-ExecuteAction("^+7", S7)
-RETURN
-^+8::
-ExecuteAction("^+8", S8)
-RETURN
-^+9::
-ExecuteAction("^+9", S9)
-RETURN
+^+`::ExecuteAction("^+`", Stilde)
+^+1::ExecuteAction("^+1", S1)
+^+2::ExecuteAction("^+2", S2)
+^+3::ExecuteAction("^+3", S3)
+^+4::ExecuteAction("^+4", S4)
+^+5::ExecuteAction("^+5", S5)
+^+6::ExecuteAction("^+6", S6)
+^+7::ExecuteAction("^+7", S7)
+^+8::ExecuteAction("^+8", S8)
+^+9::ExecuteAction("^+9", S9)
 
-!`::
-ExecuteAction("!`", Atilde)
-RETURN
-!1::
-ExecuteAction("!1", A1)
-RETURN
-!2::
-ExecuteAction("!2", A2)
-RETURN
-!3::
-ExecuteAction("!3", A3)
-RETURN
-!4::
-ExecuteAction("!4", A4)
-RETURN
-!5::
-ExecuteAction("!5", A5)
-RETURN
-!6::
-ExecuteAction("!6", A6)
-RETURN
-!7::
-ExecuteAction("!7", A7)
-RETURN
-!8::
-ExecuteAction("!8", A8)
-RETURN
-!9::
-ExecuteAction("!9", A9)
-RETURN
+!`::ExecuteAction("!`", Atilde)
+!1::ExecuteAction("!1", A1)
+!2::ExecuteAction("!2", A2)
+!3::ExecuteAction("!3", A3)
+!4::ExecuteAction("!4", A4)
+!5::ExecuteAction("!5", A5)
+!6::ExecuteAction("!6", A6)
+!7::ExecuteAction("!7", A7)
+!8::ExecuteAction("!8", A8)
+!9::ExecuteAction("!9", A9)
 
-#`::
-ExecuteAction("#`", Wtilde)
-RETURN
-#1::
-ExecuteAction("#1", W1)
-RETURN
-#2::
-ExecuteAction("#2", W2)
-RETURN
-#3::
-ExecuteAction("#3", W3)
-RETURN
-#4::
-ExecuteAction("#4", W4)
-RETURN
-#5::
-ExecuteAction("#5", W5)
-RETURN
-#6::
-ExecuteAction("#6", W6)
-RETURN
-#7::
-ExecuteAction("#7", W7)
-RETURN
-#8::
-ExecuteAction("#8", W8)
-RETURN
-#9::
-ExecuteAction("#9", W9)
-RETURN
+#`::ExecuteAction("#`", Wtilde)
+#1::ExecuteAction("#1", W1)
+#2::ExecuteAction("#2", W2)
+#3::ExecuteAction("#3", W3)
+#4::ExecuteAction("#4", W4)
+#5::ExecuteAction("#5", W5)
+#6::ExecuteAction("#6", W6)
+#7::ExecuteAction("#7", W7)
+#8::ExecuteAction("#8", W8)
+#9::ExecuteAction("#9", W9)
 
 GuiClose:
 ExitApp
