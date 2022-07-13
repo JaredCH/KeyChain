@@ -31,13 +31,14 @@ IfNotExist, %A_AppData%\KeyChain\Inifile.ini
 Loop, 18{
 IniRead, f%A_Index%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F%A_Index%
 }
-IniRead, Ctilde, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C~
+
 Loop, 9{
 IniRead, C%A_Index%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C%A_Index%
 IniRead, S%A_Index%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S%A_Index%
 IniRead, A%A_Index%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A%A_Index%
-IniRead, Wtilde, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W~
+IniRead, W%A_Index%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W%A_Index%
 }
+IniRead, Ctilde, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C~
 IniRead, Stilde, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S~
 IniRead, Atilde, %A_AppData%\KeyChain\inifile.ini, AltKeys, A~
 IniRead, Wtilde, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W~
@@ -376,7 +377,6 @@ Loop, 18
 GuiControlGet, f%A_Index% ,, f%A_Index%
 }
 
-GuiControlGet, ctilde ,, Ctilde
 Loop, 9
 {
 GuiControlGet, c%A_Index% ,, C%A_Index%
@@ -384,6 +384,7 @@ GuiControlGet, s%A_Index% ,, s%A_Index%
 GuiControlGet, a%A_Index% ,, a%A_Index%
 GuiControlGet, w%A_Index% ,, w%A_Index%
 }
+GuiControlGet, ctilde ,, Ctilde
 GuiControlGet, stilde ,, stilde
 GuiControlGet, atilde ,, atilde
 GuiControlGet, wtilde ,, wtilde
@@ -598,16 +599,16 @@ RETURN
 ExecuteAction("^+1", S1)
 RETURN
 ^+2::
-ExecuteAction("^+1", S1)
-RETURN
-^+3::
 ExecuteAction("^+2", S2)
 RETURN
-^+4::
+^+3::
 ExecuteAction("^+3", S3)
 RETURN
+^+4::
+ExecuteAction("^+4", S4)
+RETURN
 ^+5::
-ExecuteAction("^+5", S4)
+ExecuteAction("^+5", S5)
 RETURN
 ^+6::
 ExecuteAction("^+6", S6)
