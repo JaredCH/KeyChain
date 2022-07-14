@@ -1,4 +1,4 @@
-﻿;~ KeyChain was developed on 7/1/2022 by Jared Hicks.
+﻿;~ KeyChain was developed on 7/1/2022 by Jared Hicks
 ;~ The purpose of this application is to allow the user to setup, save,
 ;~ and re use macros
 ;~ The application allows the user to input any plain text string, and some ahk character mappings
@@ -27,21 +27,61 @@ IfNotExist, %A_AppData%\KeyChain\Scripts
 
 IfNotExist, %A_AppData%\KeyChain\Inifile.ini
 	FileCopy, Z:\Development\KeyChain\Inifile.ini, %A_AppData%\KeyChain\Inifile.ini ,
-   
-Loop, 18{
-IniRead, f%A_Index%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F%A_Index%
-}
 
-Loop, 9{
-IniRead, C%A_Index%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C%A_Index%
-IniRead, S%A_Index%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S%A_Index%
-IniRead, A%A_Index%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A%A_Index%
-IniRead, W%A_Index%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W%A_Index%
-}
+
+y_val_offset := 30
+Gui, Add, GroupBox, x30 y9 w175 h560 , Function Keys
+Gui, Add, GroupBox, x220 y9 w175 h325 , Control Keys
+Gui, Add, GroupBox, x410 y9 w175 h325 , Control + Shift Keys
+Gui, Add, GroupBox, x600 y9 w175 h325 , Alt Keys  
+
 IniRead, Ctilde, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C~
 IniRead, Stilde, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S~
 IniRead, Atilde, %A_AppData%\KeyChain\inifile.ini, AltKeys, A~
 IniRead, Wtilde, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W~
+
+Loop, 18
+{
+IniRead, f%A_Index%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F%A_Index%
+    y_val1 := y_val_offset * A_Index - 1
+    y_val2 := y_val1 - 1
+
+        Gui, Add, Text, x42 y%y_val1% w30 h20 , F%A_Index%
+		Gui, Add, Edit, x75 y%y_val2% w120 h20 vf%A_Index%, % F%A_Index%
+}
+
+Loop, 9
+{
+IniRead, C%A_Index%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C%A_Index%
+IniRead, S%A_Index%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S%A_Index%
+IniRead, A%A_Index%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A%A_Index%
+IniRead, W%A_Index%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W%A_Index%
+	y_val1 := y_val_offset * A_Index - 1
+    y_val2 := y_val1 - 1
+    If (A_Index = 1)
+	{
+		Gui, Add, Text, x232 y29 w30 h20 , ^~
+		Gui, Add, Edit, x265 y28 w120 h20 vctilde, %Ctilde%
+		Gui, Add, Text, x422 y29 w30 h20 , ^?~
+		Gui, Add, Edit, x455 y28 w120 h20 vstilde, %Stilde%
+		Gui, Add, Text, x612 y29 w30 h20 , ?~
+		Gui, Add, Edit, x645 y28 w120 h20 vatilde, %Atilde%
+		Gui, Add, Text, x802 y29 w30 h20 , ?~
+		Gui, Add, Edit, x835 y28 w120 h20 vwtilde, %Wtilde%
+	}
+	Else
+	{
+		Gui, Add, Text, x232 y%y_val1% w30 h20 , ^%A_Index%
+		Gui, Add, Edit, x265 y%y_val2% w120 h20 vc%A_Index%, % C%A_Index%
+		Gui, Add, Text, x422 y%y_val1% w30 h20 , ^?%A_Index%
+		Gui, Add, Edit, x455 y%y_val2% w120 h20 vs%A_Index%, % S%A_Index%
+		Gui, Add, Text, x612 y%y_val1% w30 h20 , ⎇%A_Index%
+		Gui, Add, Edit, x645 y%y_val2% w120 h20 va%A_Index%, % A%A_Index%
+		Gui, Add, Text, x802 y%y_val1% w30 h20 , Ω%A_Index%
+		Gui, Add, Edit, x835 y%y_val2% w120 h20 vw%A_Index%, % W%A_Index%
+	}
+}
+
 Loop, 5	{
 	IniRead, ctrl%A_Index%, %A_AppData%\KeyChain\inifile.ini, Checkbox, ctrl%A_Index%
 	IniRead, alt%A_Index%, %A_AppData%\KeyChain\inifile.ini, Checkbox, alt%A_Index%
@@ -50,131 +90,7 @@ Loop, 5	{
 	IniRead, string%A_Index%, %A_AppData%\KeyChain\inifile.ini, String, string%A_Index%
 	}
 ;~ ////////////////////////GUI SETUP - FUNCTION KEYS
-Gui, Add, GroupBox, x30 y9 w175 h560 , Function Keys
-Gui, Add, Text, x42 y29 w30 h20 vtF1, F1
-Gui, Add, Edit, x75 y28 w120 h20 vf1, %F1%
-Gui, Add, Text, x42 y59 w30 h20 , F2
-Gui, Add, Edit, x75 y58 w120 h20 vf2, %F2%
-Gui, Add, Text, x42 y89 w30 h20 , F3
-Gui, Add, Edit, x75 y88 w120 h20 vf3, %F3%
-Gui, Add, Text, x42 y119 w30 h20 , F4
-Gui, Add, Edit, x75 y118 w120 h20 vf4, %F4%
-Gui, Add, Text, x42 y149 w30 h20 , F5
-Gui, Add, Edit, x75 y148 w120 h20 vf5, %F5%
-Gui, Add, Text, x42 y179 w30 h20 , F6
-Gui, Add, Edit, x75 y178 w120 h20 vf6, %F6%
-Gui, Add, Text, x42 y209 w30 h20 , F7
-Gui, Add, Edit, x75 y208 w120 h20 vf7, %F7%
-Gui, Add, Text, x42 y239 w30 h20 , F8
-Gui, Add, Edit, x75 y238 w120 h20 vf8, %F8%
-Gui, Add, Text, x42 y269 w30 h20 , F9
-Gui, Add, Edit, x75 y268 w120 h20 vf9, %F9%
-Gui, Add, Text, x42 y299 w30 h20 , F10
-Gui, Add, Edit, x75 y298 w120 h20 vf10, %F10%
-Gui, Add, Text, x42 y329 w30 h20 , F11
-Gui, Add, Edit, x75 y328 w120 h20 vf11, %F11%
-Gui, Add, Text, x42 y359 w150 h20 , F12  -   Emergency Exit
-;~ Gui, Add, Edit, x75 y358 w120 h20 vf12, %F12%
-Gui, Add, Text, x42 y389 w30 h20 , F13
-Gui, Add, Edit, x75 y388 w120 h20 vf13, %F13%
-Gui, Add, Text, x42 y419 w30 h20 , F14
-Gui, Add, Edit, x75 y418 w120 h20 vf14, %F14%
-Gui, Add, Text, x42 y449 w30 h20 , F15
-Gui, Add, Edit, x75 y448 w120 h20 vf15, %F15%
-Gui, Add, Text, x42 y479 w30 h20 , F16
-Gui, Add, Edit, x75 y478 w120 h20 vf16, %F16%
-Gui, Add, Text, x42 y509 w30 h20 , F17
-Gui, Add, Edit, x75 y508 w120 h20 vf17, %F17%
-Gui, Add, Text, x42 y539 w30 h20 , F18
-Gui, Add, Edit, x75 y538 w120 h20 vf18, %F18%
-;~ ////////////////////////GUI SETUP - CONTROL KEYS
-Gui, Add, GroupBox, x220 y9 w175 h325 , Control Keys
-Gui, Add, Text, x232 y29 w30 h20 , ^~
-Gui, Add, Edit, x265 y28 w120 h20 vctilde, %Ctilde%
-Gui, Add, Text, x232 y59 w30 h20 , ^1
-Gui, Add, Edit, x265 y58 w120 h20 vc1, %C1%
-Gui, Add, Text, x232 y89 w30 h20 , ^2
-Gui, Add, Edit, x265 y88 w120 h20 vc2, %C2%
-Gui, Add, Text, x232 y119 w30 h20 , ^3
-Gui, Add, Edit, x265 y118 w120 h20 vc3, %C3%
-Gui, Add, Text, x232 y149 w30 h20 , ^4
-Gui, Add, Edit, x265 y148 w120 h20 vc4, %C4%
-Gui, Add, Text, x232 y179 w30 h20 , ^5
-Gui, Add, Edit, x265 y178 w120 h20 vc5, %C5%
-Gui, Add, Text, x232 y209 w30 h20 , ^6
-Gui, Add, Edit, x265 y208 w120 h20 vc6, %C6%
-Gui, Add, Text, x232 y239 w30 h20 , ^7
-Gui, Add, Edit, x265 y238 w120 h20 vc7, %C7%
-Gui, Add, Text, x232 y269 w30 h20 , ^8
-Gui, Add, Edit, x265 y268 w120 h20 vc8, %C8%
-Gui, Add, Text, x232 y299 w30 h20 , ^9
-Gui, Add, Edit, x265 y298 w120 h20 vc9, %C9%
-;~ ////////////////////////GUI SETUP - CONTROL + SHIFT KEYS
-Gui, Add, GroupBox, x410 y9 w175 h325 , Control + Shift Keys
-Gui, Add, Text, x422 y29 w30 h20 , ^↑~
-Gui, Add, Edit, x455 y28 w120 h20 vstilde, %Stilde%
-Gui, Add, Text, x422 y59 w30 h20 , ^↑1
-Gui, Add, Edit, x455 y58 w120 h20 vs1, %S1%
-Gui, Add, Text, x422 y89 w30 h20 , ^↑2
-Gui, Add, Edit, x455 y88 w120 h20 vs2, %S2%
-Gui, Add, Text, x422 y119 w30 h20 , ^↑3
-Gui, Add, Edit, x455 y118 w120 h20 vs3, %S3%
-Gui, Add, Text, x422 y149 w30 h20 , ^↑4
-Gui, Add, Edit, x455 y148 w120 h20 vs4, %S4%
-Gui, Add, Text, x422 y179 w30 h20 , ^↑5
-Gui, Add, Edit, x455 y178 w120 h20 vs5, %S5%
-Gui, Add, Text, x422 y209 w30 h20 , ^↑6
-Gui, Add, Edit, x455 y208 w120 h20 vs6, %S6%
-Gui, Add, Text, x422 y239 w30 h20 , ^↑7
-Gui, Add, Edit, x455 y238 w120 h20 vs7, %S7%
-Gui, Add, Text, x422 y269 w30 h20 , ^↑8
-Gui, Add, Edit, x455 y268 w120 h20 vs8, %S8%
-Gui, Add, Text, x422 y299 w30 h20 , ^↑9
-Gui, Add, Edit, x455 y298 w120 h20 vs9, %S9%
-;~ ////////////////////////GUI SETUP - ALT KEYS
-Gui, Add, GroupBox, x600 y9 w175 h325 , Alt Keys
-Gui, Add, Text, x612 y29 w30 h20 , ⎇~
-Gui, Add, Edit, x645 y28 w120 h20 vatilde, %Atilde%
-Gui, Add, Text, x612 y59 w30 h20 , ⎇1
-Gui, Add, Edit, x645 y58 w120 h20 va1, %A1%
-Gui, Add, Text, x612 y89 w30 h20 , ⎇2
-Gui, Add, Edit, x645 y88 w120 h20 va2, %A2%
-Gui, Add, Text, x612 y119 w30 h20 , ⎇3
-Gui, Add, Edit, x645 y118 w120 h20 va3, %A3%
-Gui, Add, Text, x612 y149 w30 h20 , ⎇4
-Gui, Add, Edit, x645 y148 w120 h20 va4, %A4%
-Gui, Add, Text, x612 y179 w30 h20 , ⎇5
-Gui, Add, Edit, x645 y178 w120 h20 va5, %A5%
-Gui, Add, Text, x612 y209 w30 h20 , ⎇6
-Gui, Add, Edit, x645 y208 w120 h20 va6, %A6%
-Gui, Add, Text, x612 y239 w30 h20 , ⎇7
-Gui, Add, Edit, x645 y238 w120 h20 va7, %A7%
-Gui, Add, Text, x612 y269 w30 h20 , ⎇8
-Gui, Add, Edit, x645 y268 w120 h20 va8, %A8%
-Gui, Add, Text, x612 y299 w30 h20 , ⎇9
-Gui, Add, Edit, x645 y298 w120 h20 va9, %A9%
-;~ ////////////////////////GUI SETUP - WINDOWS KEYS
-Gui, Add, GroupBox, x790 y9 w175 h325 , Windows Keys
-Gui, Add, Text, x802 y29 w30 h20 , Ω~
-Gui, Add, Edit, x835 y28 w120 h20 vwtilde, %Wtilde%
-Gui, Add, Text, x802 y59 w30 h20 , Ω1
-Gui, Add, Edit, x835 y58 w120 h20 vw1, %W1%
-Gui, Add, Text, x802 y89 w30 h20 , Ω2
-Gui, Add, Edit, x835 y88 w120 h20 vw2, %W2%
-Gui, Add, Text, x802 y119 w30 h20 , Ω3
-Gui, Add, Edit, x835 y118 w120 h20 vw3, %W3%
-Gui, Add, Text, x802 y149 w30 h20 , Ω4
-Gui, Add, Edit, x835 y148 w120 h20 vw4, %W4%
-Gui, Add, Text, x802 y179 w30 h20 , Ω5
-Gui, Add, Edit, x835 y178 w120 h20 vw5, %W5%
-Gui, Add, Text, x802 y209 w30 h20 , Ω6
-Gui, Add, Edit, x835 y208 w120 h20 vw6, %W6%
-Gui, Add, Text, x802 y239 w30 h20 , Ω7
-Gui, Add, Edit, x835 y238 w120 h20 vw7, %W7%
-Gui, Add, Text, x802 y269 w30 h20 , Ω8
-Gui, Add, Edit, x835 y268 w120 h20 vw8, %W8%
-Gui, Add, Text, x802 y299 w30 h20 , Ω9
-Gui, Add, Edit, x835 y298 w120 h20 vw9, %W9%
+
 
 ;~ ////////////////////////GUI SETUP - MISC SETUP
 Menu, Tray, Icon, %A_AppData%\KeyChain\Icon\KeyChain.ico
