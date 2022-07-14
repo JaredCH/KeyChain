@@ -17,16 +17,18 @@
 ;~ //////////////////////////////////////////////////////////////
 
 IfNotExist, %A_AppData%\KeyChain
-SplashTextOn, 225, 50, Loading Keychain settings, This may take a few moments.
-   FileCreateDir, %A_AppData%\KeyChain
-   
-IfNotExist, %A_AppData%\KeyChain\Scripts
-   FileCopyDir, Z:\Development\KeyChain\Scripts, %A_AppData%\KeyChain\Scripts ,
-   
-	FileCopyDir, Z:\Development\KeyChain\Icon, %A_AppData%\KeyChain\Icon ,
+{
+SplashTextOn, 225, 75, Loading Keychain settings, This may take a few moments.`nDownloading files from Github /JaredCH/
+FileCreateDir, %A_AppData%\KeyChain
+UrlDownloadToFile, https://github.com/JaredCH/KeyChain/archive/refs/heads/main.zip, %A_AppData%\KeyChain\Main.zip
+RunWait PowerShell.exe -Command Expand-Archive -LiteralPath '%A_AppData%\KeyChain\Main.zip' -DestinationPath %A_AppData%\KeyChain\Main,,Hide
+FileMoveDir, %A_AppData%\KeyChain\Main\KeyChain-main\Icon, %A_AppData%\KeyChain\Icon, 1
+FileMoveDir, %A_AppData%\KeyChain\Main\KeyChain-main\Scripts, %A_AppData%\KeyChain\Scripts, 1
+FileMove, %A_AppData%\KeyChain\Main\KeyChain-main\inifile.ini, %A_AppData%\KeyChain\inifile.ini
+FileRemoveDir, %A_AppData%\KeyChain\Main, 1
+FileDelete, %A_AppData%\KeyChain\Main.zip
 
-IfNotExist, %A_AppData%\KeyChain\Inifile.ini
-	FileCopy, Z:\Development\KeyChain\Inifile.ini, %A_AppData%\KeyChain\Inifile.ini ,
+}
 
 y_val_offset := 30
 Gui, Add, GroupBox, x30 y9 w175 h560 , Function Keys
@@ -62,7 +64,7 @@ IniRead, W%A_Index%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W%A_Index%
 	{
 		Gui, Add, Text, x232 y29 w30 h20 , ^~
 		Gui, Add, Edit, x265 y28 w120 h20 vctilde, %Ctilde%
-		Gui, Add, Text, x422 y29 w30 h20 , ^?~
+		Gui, Add, Text, x422 y29 w30 h20 , ^!~
 		Gui, Add, Edit, x455 y28 w120 h20 vstilde, %Stilde%
 		Gui, Add, Text, x612 y29 w30 h20 , ⎇~
 		Gui, Add, Edit, x645 y28 w120 h20 vatilde, %Atilde%
@@ -73,7 +75,7 @@ IniRead, W%A_Index%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W%A_Index%
 	{
 		Gui, Add, Text, x232 y%y_val1% w30 h20 , ^%current_key%
 		Gui, Add, Edit, x265 y%y_val2% w120 h20 vc%current_key%, % C%current_key%
-		Gui, Add, Text, x422 y%y_val1% w30 h20 , ^?%current_key%
+		Gui, Add, Text, x422 y%y_val1% w30 h20 , ^!%current_key%
 		Gui, Add, Edit, x455 y%y_val2% w120 h20 vs%current_key%, % S%current_key%
 		Gui, Add, Text, x612 y%y_val1% w30 h20 , ⎇%current_key%
 		Gui, Add, Edit, x645 y%y_val2% w120 h20 va%current_key%, % A%current_key%
@@ -167,8 +169,13 @@ ResetConfig:
 	TrayTip KeyChain, Resetting configuration please wait.,
 Sleep 5000  
 HideTrayTip()
-	FileCopyDir, Z:\Development\KeyChain\Icon, %A_AppData%\KeyChain\Icon ,1
-	FileCopy, Z:\Development\KeyChain\Inifile.ini, %A_AppData%\KeyChain\Inifile.ini ,1
+UrlDownloadToFile, https://github.com/JaredCH/KeyChain/archive/refs/heads/main.zip, %A_AppData%\KeyChain\Main.zip
+RunWait PowerShell.exe -Command Expand-Archive -LiteralPath '%A_AppData%\KeyChain\Main.zip' -DestinationPath %A_AppData%\KeyChain\Main,,Hide
+FileMoveDir, %A_AppData%\KeyChain\Main\KeyChain-main\Icon, %A_AppData%\KeyChain\Icon, 1
+FileMoveDir, %A_AppData%\KeyChain\Main\KeyChain-main\Scripts, %A_AppData%\KeyChain\Scripts, 1
+FileMove, %A_AppData%\KeyChain\Main\KeyChain-main\inifile.ini, %A_AppData%\KeyChain\inifile.ini
+FileRemoveDir, %A_AppData%\KeyChain\Main, 1
+FileDelete, %A_AppData%\KeyChain\Main.zip
 	reload
 return
 
@@ -215,29 +222,11 @@ UpdateScripts:
 FileRemoveDir,  %A_AppData%\KeyChain\Scripts.old\, 1
 FileCopyDir, %A_AppData%\KeyChain\Scripts\, %A_AppData%\KeyChain\Scripts.old\
 FileRemoveDir, %A_AppData%\KeyChain\Scripts\, 1
-FileCreateDir, %A_AppData%\KeyChain\Scripts\
-Loop, Z:\Development\KeyChain\Scripts\*.*
-{
-   step = %A_Index%
-}
-
-stepincrement = 1
-Progress, h100 R0-%Step%, , Updating..., Updateding Script Repository
-Loop, Z:\Development\KeyChain\Scripts\*.*
-{
-FileCopy, %a_loopfilefullpath%, %A_AppData%\KeyChain\Scripts\%a_loopfilename%, 1
-Progress, %stepincrement%, %a_loopfilename%, Updating..., Updateding Script Repository %a_index% of %step%
-Sleep, 50
-stepincrement += 1 
-IfEqual, a_index, %step%, Progress, Off
-}
-LV_Delete()
-Loop, %A_AppData%\KeyChain\Scripts\*.*
-  LV_Add("",A_LoopFileName, A_LoopFileExt)
-  LV_ModifyCol(2, 40)
-  LV_ModifyCol(1, 200)
-  LV_ModifyCol(2, "SortDesc")
-
+UrlDownloadToFile, https://github.com/JaredCH/KeyChain/archive/refs/heads/main.zip, %A_AppData%\KeyChain\Main.zip
+RunWait PowerShell.exe -Command Expand-Archive -LiteralPath '%A_AppData%\KeyChain\Main.zip' -DestinationPath %A_AppData%\KeyChain\Main,,Hide
+FileMoveDir, %A_AppData%\KeyChain\Main\KeyChain-main\Scripts, %A_AppData%\KeyChain\Scripts, 1
+FileRemoveDir, %A_AppData%\KeyChain\Main, 1
+FileDelete, %A_AppData%\KeyChain\Main.zip
 TrayTip KeyChain, Scripts Repository Updated Successfully!
 Sleep 4000  
 HideTrayTip()
