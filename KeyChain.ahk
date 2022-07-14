@@ -1,4 +1,4 @@
-﻿;~ KeyChain was developed on 7/1/2022 by Jared Hicks
+﻿;~ KeyChain was developed on 7/1/2022 by Jared Hicks.
 ;~ The purpose of this application is to allow the user to setup, save,
 ;~ and re use macros
 ;~ The application allows the user to input any plain text string, and some ahk character mappings
