@@ -47,7 +47,8 @@ IniRead, f%A_Index%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F%A_Index%
         Gui, Add, Text, x42 y%y_val1% w30 h20 , F%A_Index%
 		Gui, Add, Edit, x75 y%y_val2% w120 h20 vf%A_Index%, % F%A_Index%
 }
-
+GuiControl,, F12, Reload Application
+GuiControl, Disable, f12
 Loop, 10
 {
 IniRead, C%A_Index%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C%A_Index%
