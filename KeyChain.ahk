@@ -28,13 +28,11 @@ IfNotExist, %A_AppData%\KeyChain\Scripts
 IfNotExist, %A_AppData%\KeyChain\Inifile.ini
 	FileCopy, Z:\Development\KeyChain\Inifile.ini, %A_AppData%\KeyChain\Inifile.ini ,
 
-
 y_val_offset := 30
 Gui, Add, GroupBox, x30 y9 w175 h560 , Function Keys
 Gui, Add, GroupBox, x220 y9 w175 h325 , Control Keys
 Gui, Add, GroupBox, x410 y9 w175 h325 , Control + Shift Keys
 Gui, Add, GroupBox, x600 y9 w175 h325 , Alt Keys  
-
 IniRead, Ctilde, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C~
 IniRead, Stilde, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S~
 IniRead, Atilde, %A_AppData%\KeyChain\inifile.ini, AltKeys, A~
@@ -89,8 +87,6 @@ Loop, 5	{
 	IniRead, dropdown%A_Index%, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown%A_Index%
 	IniRead, string%A_Index%, %A_AppData%\KeyChain\inifile.ini, String, string%A_Index%
 	}
-;~ ////////////////////////GUI SETUP - FUNCTION KEYS
-
 
 ;~ ////////////////////////GUI SETUP - MISC SETUP
 Menu, Tray, Icon, %A_AppData%\KeyChain\Icon\KeyChain.ico
@@ -98,36 +94,17 @@ Gui, Add, Button, x880 y560 w110 h20 gHide, Hide
 Gui, Add, Button, x740 y560 w110 h20 gsave, Save
 
 DDList= Null|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6||7|8|9|[|]|;|'|,|.|/|-|=|MButton|Lbutton|Rbutton
+y_val_actual:= 370
+Loop, 5
+{
+Gui, Add, CheckBox, x250 y%y_val_actual% w50 h20 vctrl%A_Index%, CTRL
+Gui, Add, CheckBox, x305 y%y_val_actual% w40 h20 valt%A_Index%, ALT
+Gui, Add, CheckBox, x350 y%y_val_actual% w50 h20 vshift%A_Index%, SHIFT
+Gui, Add, DropDownList, x400 y%y_val_actual% w50 h200 vdropdown%A_Index%, %DDList%
+Gui, Add, Edit, x475 y%y_val_actual% w120 h20 vstring%A_Index%, % string%A_Index%
+y_val_actual := y_val_actual+40
+}
 
-Gui, Add, CheckBox, x250 y370 w50 h20 0 vctrl1, CTRL
-Gui, Add, CheckBox, x305 y370 w40 h20 valt1, ALT
-Gui, Add, CheckBox, x350 y370 w50 h20 vshift1, SHIFT
-Gui, Add, DropDownList, x400 y370 w50 h200 vdropdown1, %DDList%
-Gui, Add, Edit, x475 y370 w120 h20 vstring1, %string1%
-
-Gui, Add, CheckBox, x250 y410 w50 h20 vctrl2, CTRL
-Gui, Add, CheckBox, x305 y410 w40 h20 valt2, ALT
-Gui, Add, CheckBox, x350 y410 w50 h20 vshift2, SHIFT
-Gui, Add, DropDownList, x400 y410 w50 h200 vdropdown2, %DDList%
-Gui, Add, Edit, x475 y410 w120 h20 vstring2, %string2%
-
-Gui, Add, CheckBox, x250 y450 w50 h20 vctrl3, CTRL
-Gui, Add, CheckBox, x305 y450 w40 h20 valt3, ALT
-Gui, Add, CheckBox, x350 y450 w50 h20 vshift3, SHIFT
-Gui, Add, DropDownList, x400 y450 w50 h200 vdropdown3, %DDList%
-Gui, Add, Edit, x475 y450 w120 h20 vstring3, %string3%
-
-Gui, Add, CheckBox, x250 y490 w50 h20 vctrl4, CTRL
-Gui, Add, CheckBox, x305 y490 w40 h20 valt4, ALT
-Gui, Add, CheckBox, x350 y490 w50 h20 vshift4, SHIFT
-Gui, Add, DropDownList, x400 y490 w50 h200 vdropdown4, %DDList%
-Gui, Add, Edit, x475 y490 w120 h20 vstring4, %string4%
-
-Gui, Add, CheckBox, x250 y530 w50 h20 vctrl5, CTRL
-Gui, Add, CheckBox, x305 y530 w40 h20 valt5, ALT
-Gui, Add, CheckBox, x350 y530 w50 h20 vshift5, SHIFT
-Gui, Add, DropDownList, x400 y530 w50 h200 vdropdown5, %DDList%
-Gui, Add, Edit, x475 y530 w120 h20 vstring5, %string5%
 
 Loop, 5{
 GuiControl,,ctrl%A_Index%,% ctrl%A_Index%
@@ -173,9 +150,8 @@ Menu, Tray, Add, Help Documentation, help
 Menu, Tray, Add, AHK Keys Guide, ahkkeys
 Menu, Tray, Add, Update Scripts, UpdateScripts
 Menu, Tray, Add, Show Interface, ShowGui
-
+;-/-/-/-/-/-/-/-/-/-/-/-/-/END OF SETUP/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 return
-
 
 RemoveToolTip:
 ToolTip
@@ -193,7 +169,6 @@ HideTrayTip()
 	FileCopy, Z:\Development\KeyChain\Inifile.ini, %A_AppData%\KeyChain\Inifile.ini ,1
 	reload
 return
-
 
 listview:
 if (A_GuiEvent = "DoubleClick")
@@ -217,7 +192,6 @@ return
 ShowGui:
 Gui, Show,
 return
-
 
 hotkey1:
 send, %string1%
@@ -267,8 +241,6 @@ Sleep 4000
 HideTrayTip()
 return
 
-
-
 HideTrayTip() {
     TrayTip  
     if SubStr(A_OSVersion,1,3) = "10." {
@@ -278,14 +250,12 @@ HideTrayTip() {
     }
 }
 
-
 Hide:
 WinHide
 TrayTip KeyChain, Hidden but not closed!
 Sleep 2500  
 HideTrayTip()
 return
-
 
 Save:
 Loop, 18
@@ -346,8 +316,6 @@ IniWrite, %ShiftbVar%, %A_AppData%\KeyChain\inifile.ini, Checkbox, shift%A_Index
 IniWrite, %DropdownVar%, %A_AppData%\KeyChain\inifile.ini, Dropdown, dropdown%A_Index%
 IniWrite, %StringVar%, %A_AppData%\KeyChain\inifile.ini, String, String%A_Index%
 }
-
-
 TrayTip KeyChain, Settings Saved! Reloading.
 Sleep 2000
 reload
