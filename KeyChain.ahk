@@ -177,7 +177,7 @@ Gui, Add, Text, x802 y299 w30 h20 , Ω9
 Gui, Add, Edit, x835 y298 w120 h20 vw9, %W9%
 
 ;~ ////////////////////////GUI SETUP - MISC SETUP
-Menu, Tray, Icon, %A_AppData%/KeyChain/Icon/KeyChain.ico
+Menu, Tray, Icon, %A_AppData%\KeyChain\Icon\KeyChain.ico
 Gui, Add, Button, x880 y560 w110 h20 gHide, Hide
 Gui, Add, Button, x740 y560 w110 h20 gsave, Save
 
