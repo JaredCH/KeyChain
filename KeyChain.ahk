@@ -48,7 +48,7 @@ IniRead, f%A_Index%, %A_AppData%\KeyChain\inifile.ini, FunctionKeys, F%A_Index%
 		Gui, Add, Edit, x75 y%y_val2% w120 h20 vf%A_Index%, % F%A_Index%
 }
 
-Loop, 9
+Loop, 10
 {
 IniRead, C%A_Index%, %A_AppData%\KeyChain\inifile.ini, ControlKeys, C%A_Index%
 IniRead, S%A_Index%, %A_AppData%\KeyChain\inifile.ini, ShiftKeys, S%A_Index%
@@ -56,27 +56,28 @@ IniRead, A%A_Index%, %A_AppData%\KeyChain\inifile.ini, AltKeys, A%A_Index%
 IniRead, W%A_Index%, %A_AppData%\KeyChain\inifile.ini, WindowsKeys, W%A_Index%
 	y_val1 := y_val_offset * A_Index - 1
     y_val2 := y_val1 - 1
+	current_key := A_Index - 1
     If (A_Index = 1)
 	{
 		Gui, Add, Text, x232 y29 w30 h20 , ^~
 		Gui, Add, Edit, x265 y28 w120 h20 vctilde, %Ctilde%
 		Gui, Add, Text, x422 y29 w30 h20 , ^?~
 		Gui, Add, Edit, x455 y28 w120 h20 vstilde, %Stilde%
-		Gui, Add, Text, x612 y29 w30 h20 , ?~
+		Gui, Add, Text, x612 y29 w30 h20 , ⎇~
 		Gui, Add, Edit, x645 y28 w120 h20 vatilde, %Atilde%
-		Gui, Add, Text, x802 y29 w30 h20 , ?~
+		Gui, Add, Text, x802 y29 w30 h20 , Ω~
 		Gui, Add, Edit, x835 y28 w120 h20 vwtilde, %Wtilde%
 	}
 	Else
 	{
-		Gui, Add, Text, x232 y%y_val1% w30 h20 , ^%A_Index%
-		Gui, Add, Edit, x265 y%y_val2% w120 h20 vc%A_Index%, % C%A_Index%
-		Gui, Add, Text, x422 y%y_val1% w30 h20 , ^?%A_Index%
-		Gui, Add, Edit, x455 y%y_val2% w120 h20 vs%A_Index%, % S%A_Index%
-		Gui, Add, Text, x612 y%y_val1% w30 h20 , ⎇%A_Index%
-		Gui, Add, Edit, x645 y%y_val2% w120 h20 va%A_Index%, % A%A_Index%
-		Gui, Add, Text, x802 y%y_val1% w30 h20 , Ω%A_Index%
-		Gui, Add, Edit, x835 y%y_val2% w120 h20 vw%A_Index%, % W%A_Index%
+		Gui, Add, Text, x232 y%y_val1% w30 h20 , ^%current_key%
+		Gui, Add, Edit, x265 y%y_val2% w120 h20 vc%current_key%, % C%current_key%
+		Gui, Add, Text, x422 y%y_val1% w30 h20 , ^?%current_key%
+		Gui, Add, Edit, x455 y%y_val2% w120 h20 vs%current_key%, % S%current_key%
+		Gui, Add, Text, x612 y%y_val1% w30 h20 , ⎇%current_key%
+		Gui, Add, Edit, x645 y%y_val2% w120 h20 va%current_key%, % A%current_key%
+		Gui, Add, Text, x802 y%y_val1% w30 h20 , Ω%current_key%
+		Gui, Add, Edit, x835 y%y_val2% w120 h20 vw%current_key%, % W%current_key%
 	}
 }
 
