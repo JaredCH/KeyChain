@@ -1,3 +1,6 @@
+gosub, Top
+
+Top:
 Toggle := !Toggle
 Loop {
 PixelSearch, X, Y, 212, 530, 1856, 1019, 0x0000FF, , Fast
@@ -15,7 +18,7 @@ sleep, 200
 send, 0
 send, {Up}{down}
 sleep, 500
-goto, F2
+goto, Top
 }
 Sleep 2000 ; Less sleep = do more often. More sleep = do less often. edit this to any value you prefer
 If not Toggle 
