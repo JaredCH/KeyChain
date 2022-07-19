@@ -27,7 +27,6 @@ FileMoveDir, %A_AppData%\KeyChain\Main\KeyChain-main\Scripts, %A_AppData%\KeyCha
 FileMove, %A_AppData%\KeyChain\Main\KeyChain-main\inifile.ini, %A_AppData%\KeyChain\inifile.ini
 FileRemoveDir, %A_AppData%\KeyChain\Main, 1
 FileDelete, %A_AppData%\KeyChain\Main.zip
-
 }
 
 y_val_offset := 30
@@ -230,6 +229,7 @@ FileDelete, %A_AppData%\KeyChain\Main.zip
 TrayTip KeyChain, Scripts Repository Updated Successfully!
 Sleep 4000  
 HideTrayTip()
+reload
 return
 
 HideTrayTip() {
@@ -333,7 +333,7 @@ IfInString, string_contents, Click
 IfInString, string_contents, Script
 {
 	StringSplit, ScriptArray, string_contents, %A_Space%,
-    Run %A_AppData%/KeyChain/Scripts/%ScriptArray2%
+    Run %A_AppData%\KeyChain\Scripts\%ScriptArray2%
     return
 }
 	else
