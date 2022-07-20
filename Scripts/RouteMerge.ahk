@@ -24,3 +24,4 @@ Sleep, 300
 MouseClick, L, 125, 276,,, D
 Sleep, 300
 MouseClick, L, 85, 274,,, U
+}
