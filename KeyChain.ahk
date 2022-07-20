@@ -384,6 +384,22 @@ MouseGetPos, xpos, ypos
 ToolTip, %xpos% : %ypos%
 return
 
+^Esc::
+global toggle
+ if (toggle = "OFF")
+ {
+	toggle := "ON"
+	ToolTip, F1 - %f1%`nF2 - %f2%`nF3 - %f3%`nF4 - %f4%`nF5 - %f5%`nF6 - %f6%`nF7 - %f7%`nF8 - %f8%`nF9 - %f9%`nF10 - %f10%`nF11 - %f11%`nF12 - %f12%`n^~ = %ctilde%`n^1 - %c1%`n^2 - %c2%`n^3 - %c3%`n^4 - %c4%`n^5 - %c5%`n^6 - %c6%`n^7 - %c7%`n^8 - %c8%`n^9 - %c9%`n!^~ = %stilde%`n!^1 - %s1%`n!^2 - %s2%`n!^3 - %s3%`n!^4 - %s4%`n!^5 - %s5%`n!^6 - %s6%`n!^7 - %s7%`n!^8 - %s8%`n!^9 - %s9%`n⎇~ = %atilde%`n⎇1 - %a1%`n⎇2 - %a2%`n⎇3 - %a3%`n⎇4 - %a4%`n⎇5 - %a5%`n⎇6 - %a6%`n⎇7 - %a7%`n⎇8 - %a8%`n⎇9 - %a9%`nΩ~ = %wtilde%`nΩ1 - %w1%`nΩ2 - %w2%`nΩ3 - %w3%`nΩ4 - %w4%`nΩ5 - %w5%`nΩ6 - %w6%`nΩ7 - %w7%`nΩ8 - %w8%`nΩ9 - %w9%`n
+}
+else
+{
+	toggle := "OFF"
+	ToolTip
+}
+
+
+return
+
 F1::ExecuteAction("F1", F1)
 F2::ExecuteAction("F2", F2)
 F3::ExecuteAction("F3", F4)
