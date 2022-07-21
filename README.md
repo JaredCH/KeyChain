@@ -21,4 +21,4 @@ Manages key mapping for hotkeys and scripts/executeables.
 - To use the google search function, simply have "Google" in the hotkey text box while highlighted a string of text and pressing the hotkey.
 - To Click type "Click Xcord Ycord" Ex: Click 100 100
 - To use the Internal command to show the X and Y coordinate of the mouse, have "Internal ShowXY" in the hotkey text box.
-
+- Ctrl+Esc to show a list of all active hotkeys and what they are assigned to.
