@@ -1,3 +1,11 @@
+WinGetActiveTitle, win ;get current title
+InputBox, UserInput, Times to Loop, Please enter a number., , 200, 125
+if ErrorLevel
+    return
+else
+WinActivate, %win%	
+Loop, %UserInput%
+{
 mouseclick, left, 314, 43
 sleep, 500
 mouseclick, left, 338, 155,
@@ -12,3 +20,4 @@ sleep, 300
 mouseclick, left, 240, 150
 sleep, 200
 send, {down}{enter}
+}
