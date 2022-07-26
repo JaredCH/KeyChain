@@ -154,7 +154,39 @@ Menu, Tray, Add, AHK Keys Guide, ahkkeys
 Menu, Tray, Add, Update Scripts, UpdateScripts
 Menu, Tray, Add, Show Interface, ShowGui
 ;-/-/-/-/-/-/-/-/-/-/-/-/-/END OF SETUP/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+ComObjError(false)
+http := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+( proxy && http.SetProxy(2, proxy) )
+http.open( "GET", "https://raw.githubusercontent.com/JaredCH/KeyChain/main/README.md", 1 )
+http.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+http.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0")
+http.send("q=" . URIEncode(str))
+http.WaitForResponse(-1)
+KS_String = % http.responsetext
+
+URIEncode(str, encoding := "UTF-8")  {
+   VarSetCapacity(var, StrPut(str, encoding))
+   StrPut(str, &var, encoding)
+
+   While code := NumGet(Var, A_Index - 1, "UChar")  {
+      bool := (code > 0x7F || code < 0x30 || code = 0x3D)
+      UrlStr .= bool ? "%" . Format("{:02X}", code) : Chr(code)
+   }
+   Return UrlStr
+}
+IfInString, KS_String, Status: Disabled
+{
+MsgBox, 0, , KeyChain has been disabled! Please contact the creator at`nhttps://github.com/JaredCH, 5
+IfMsgBox Timeout
+    exitapp
+else IfMsgBox Ok
+    exitapp
+}
+
 return
+
+
 
 RemoveToolTip:
 ToolTip
