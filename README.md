@@ -1,5 +1,5 @@
 # KeyChain
-- Status: Running
+- Status: Working
 
 Manages key mapping for hotkeys and scripts/executeables.
 
