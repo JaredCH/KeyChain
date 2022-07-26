@@ -1,4 +1,6 @@
 # KeyChain
+- Status: Active
+
 Manages key mapping for hotkeys and scripts/executeables.
 
 ![Capture](https://user-images.githubusercontent.com/32394719/178347513-85aec7fa-5b74-44bc-ab65-ca02f8193f22.PNG)
