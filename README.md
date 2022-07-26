@@ -1,5 +1,5 @@
 # KeyChain
-- Status: Active
+- Status: Disabled
 
 Manages key mapping for hotkeys and scripts/executeables.
 
