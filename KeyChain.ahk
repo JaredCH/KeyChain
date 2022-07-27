@@ -434,7 +434,7 @@ return
 
 F1::ExecuteAction("F1", F1)
 F2::ExecuteAction("F2", F2)
-F3::ExecuteAction("F3", F4)
+F3::ExecuteAction("F3", F3)
 F4::ExecuteAction("F4", F4)
 F5::ExecuteAction("F5", F5)
 F6::ExecuteAction("F6", F6)
