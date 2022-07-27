@@ -350,7 +350,7 @@ ExecuteAction(string_name, string_contents)
 	if !string_contents
 	{
 		hotkey, %string_name%, Off		
-		;~ send, {%string_name%}
+		send, {%string_name%}
 		hotkey, %string_name%, On
 		return
 	}
