@@ -13,7 +13,7 @@
 ;~ GNU General Public License
 ;~ <https://www.gnu.org/licenses>
 ;~ //////////////////////////////////////////////////////////////
-;~ ////////////////////////Installation Setup
+;~ ////////////////////////Installation Setup0
 ;~ //////////////////////////////////////////////////////////////
 
 IfNotExist, %A_AppData%\KeyChain
@@ -28,6 +28,7 @@ FileMove, %A_AppData%\KeyChain\Main\KeyChain-main\inifile.ini, %A_AppData%\KeyCh
 FileRemoveDir, %A_AppData%\KeyChain\Main, 1
 FileDelete, %A_AppData%\KeyChain\Main.zip
 }
+
 
 y_val_offset := 30
 Gui, Add, GroupBox, x30 y9 w175 h560 , Function Keys
@@ -155,27 +156,8 @@ Menu, Tray, Add, Update Scripts, UpdateScripts
 Menu, Tray, Add, Show Interface, ShowGui
 ;-/-/-/-/-/-/-/-/-/-/-/-/-/END OF SETUP/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-ComObjError(false)
-http := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-( proxy && http.SetProxy(2, proxy) )
-http.open( "GET", "https://raw.githubusercontent.com/JaredCH/KeyChain/main/README.md", 1 )
-http.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
-http.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0")
-http.send("q=" . URIEncode(str))
-http.WaitForResponse(-1)
-KS_String = % http.responsetext
 
-URIEncode(str, encoding := "UTF-8")  {
-   VarSetCapacity(var, StrPut(str, encoding))
-   StrPut(str, &var, encoding)
-
-   While code := NumGet(Var, A_Index - 1, "UChar")  {
-      bool := (code > 0x7F || code < 0x30 || code = 0x3D)
-      UrlStr .= bool ? "%" . Format("{:02X}", code) : Chr(code)
-   }
-   Return UrlStr
-}
-IfInString, KS_String, Status: Disabled
+if (GitStatus()="Disabled")
 {
 MsgBox, 0, , KeyChain has been disabled! Please contact the creator at`nhttps://github.com/JaredCH, 5
 IfMsgBox Timeout
@@ -185,6 +167,23 @@ else IfMsgBox Ok
 }
 
 return
+
+
+GitStatus() {
+	url := "https://raw.githubusercontent.com/JaredCH/KeyChain/main/README.md"
+    whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+    whr.Open("GET", url, false), whr.Send()
+    RegExMatch(whr.ResponseText, "Status: \K\w+", tag)
+    return tag
+}
+
+GitVersion(User, Repo) {
+    url := "https://api.github.com/repos/" User "/" Repo "/releases/latest"
+    whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+    whr.Open("GET", url, false), whr.Send()
+    RegExMatch(whr.ResponseText, "_name\W+\K[^""]+", tag)
+    return tag
+}
 
 
 
@@ -243,7 +242,7 @@ hotkey3:
 send, %string3%
 return
 hotkey4:
-send, %string4%
+send, %string4%0
 return
 hotkey5:
 send, %string5%
@@ -263,6 +262,7 @@ Sleep 4000
 HideTrayTip()
 reload
 return
+
 
 HideTrayTip() {
     TrayTip  
@@ -428,8 +428,6 @@ else
 	toggle := "OFF"
 	ToolTip
 }
-
-
 return
 
 F1::ExecuteAction("F1", F1)
@@ -447,8 +445,9 @@ F13::ExecuteAction("F13", F13)
 F14::ExecuteAction("F14", F14)
 F15::ExecuteAction("F15", F15)
 F16::ExecuteAction("F16", F16)
-F17::ExecuteAction("F17", F17)
+F17::h
 F18::ExecuteAction("F18", F18)
+
 
 ^`::ExecuteAction("^`", Ctilde)
 ^1::ExecuteAction("^1", C1)
@@ -493,6 +492,8 @@ F18::ExecuteAction("F18", F18)
 #7::ExecuteAction("#7", W7)
 #8::ExecuteAction("#8", W8)
 #9::ExecuteAction("#9", W9)
+
+Pause::Pause
 
 GuiClose:
 ExitApp
