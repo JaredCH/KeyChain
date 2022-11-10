@@ -25,7 +25,7 @@ Loop, Parse, myCopiedClipboard, `n, `r
 		linesInArraySeperatedbyNewLine.Push(A_LoopField)
 return
 
-Numpad3::
+NumLock::
 DllCall("SetCursorPos", "int", f1coordx, "int", f1coordy)
 sleep, 150
 send, {LButton 3}
@@ -44,6 +44,7 @@ Loop, % linesInArraySeperatedbyNewLine.MaxIndex()
 		masterstring =%masterstring%%bom2%%A_Tab%%bom3%%A_Tab%%bom4%%A_Tab%%bom5%%A_Tab%%bom6%`n
     }
 }
+sleep, 250
 SetTimer, RemoveToolTip, -2000
 clipboard:=masterstring
 DllCall("SetCursorPos", "int", f2coordx, "int", f2coordy)
