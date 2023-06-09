@@ -59,6 +59,25 @@ send, ^!O
 Return
 
 
+`::
+PixelGetColor, color, 474, 221
+PixelGetColor, coor2, 627, 629
+if (color = "0xE2B16F")
+{
+	PixelSearch, Px, Py, 216, 449, 808, 1019, 0XD77800, 3, Fast
+if ErrorLevel
+    MsgBox, That color was not found in the specified region.
+else
+    mouseClick, Left,  % 224, Py
+sleep, 300
+	mouseclick, Left, % 224, Py+25
+	sleep, 300
+	MouseClick, Right, % 224, Py+25
+	sleep, 500
+	MouseClick, Left, % 224+45, Py+85
+}
+RETURN
+
 
 RemoveToolTip:
 ToolTip
