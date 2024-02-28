@@ -34,7 +34,7 @@ if ErrorLevel
     Return
 else
     StringSplit, amount, UserInput, `,
-   totaldim:=-amount2/2
+        totaldim:=amount2/2
 Loop, %amount1%
 {
     ControlClick, x53 y402, ahk_exe Bend-Tech Dragon.exe
