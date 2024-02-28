@@ -8,7 +8,7 @@ Loop, %UserInput%
 {
 mouseclick, left, 314, 43
 sleep, 500
-mouseclick, left, 338, 155,
+mouseclick, left, 310, 186,
 sleep, 400
 send, ^a
 sleep, 200
