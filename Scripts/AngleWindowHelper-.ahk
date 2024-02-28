@@ -28,13 +28,14 @@ Right(x,i)
 
 
 
-totaldim:=-1.25
+
 SetTitleMatchMode, 2 ;Means match partial title
 InputBox, UserInput, Count and width, Please enter Count and width seperated by a comma., ,
 if ErrorLevel
     Return
 else
     StringSplit, amount, UserInput, `,
+    totaldim:=-amount2/2
 Loop, %amount1%
 {
     ControlClick, x53 y402, ahk_exe Bend-Tech Dragon.exe
