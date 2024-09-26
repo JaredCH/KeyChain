@@ -1,4 +1,4 @@
-﻿;~ KeyChain was developed on 7/1/2022 by Jared Hicks
+;~ KeyChain was developed on 7/1/2022 by Jared Hicks
 ;~ The purpose of this application is to allow the user to setup, save,
 ;~ and re use macros
 ;~ The application allows the user to input any plain text string, and some ahk character mappings
@@ -13,7 +13,7 @@
 ;~ GNU General Public License
 ;~ <https://www.gnu.org/licenses>
 ;~ //////////////////////////////////////////////////////////////
-;~ ////////////////////////Installation Setup0
+;~ ////////////////////////Installation Setup
 ;~ //////////////////////////////////////////////////////////////
 
 IfNotExist, %A_AppData%\KeyChain
@@ -28,7 +28,6 @@ FileMove, %A_AppData%\KeyChain\Main\KeyChain-main\inifile.ini, %A_AppData%\KeyCh
 FileRemoveDir, %A_AppData%\KeyChain\Main, 1
 FileDelete, %A_AppData%\KeyChain\Main.zip
 }
-
 
 y_val_offset := 30
 Gui, Add, GroupBox, x30 y9 w175 h560 , Function Keys
@@ -136,6 +135,7 @@ if (dropdown%A_Index% != "Null" and string%A_Index% != "")
 			}
 			key:= % dropdown%A_Index%
 			Hotkey, %prestring%%Key%, hotkey%A_Index%, On
+			history%A_Index%=%Prestring%%Key%
 			prestring=
 		}
 }
@@ -156,8 +156,27 @@ Menu, Tray, Add, Update Scripts, UpdateScripts
 Menu, Tray, Add, Show Interface, ShowGui
 ;-/-/-/-/-/-/-/-/-/-/-/-/-/END OF SETUP/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
+ComObjError(false)
+http := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+( proxy && http.SetProxy(2, proxy) )
+http.open( "GET", "https://raw.githubusercontent.com/JaredCH/KeyChain/main/README.md", 1 )
+http.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+http.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0")
+http.send("q=" . URIEncode(str))
+http.WaitForResponse(-1)
+KS_String = % http.responsetext
 
-if (GitStatus()="Disabled")
+URIEncode(str, encoding := "UTF-8")  {
+   VarSetCapacity(var, StrPut(str, encoding))
+   StrPut(str, &var, encoding)
+
+   While code := NumGet(Var, A_Index - 1, "UChar")  {
+      bool := (code > 0x7F || code < 0x30 || code = 0x3D)
+      UrlStr .= bool ? "%" . Format("{:02X}", code) : Chr(code)
+   }
+   Return UrlStr
+}
+IfInString, KS_String, Status: Disabled
 {
 MsgBox, 0, , KeyChain has been disabled! Please contact the creator at`nhttps://github.com/JaredCH, 5
 IfMsgBox Timeout
@@ -167,23 +186,6 @@ else IfMsgBox Ok
 }
 
 return
-
-
-GitStatus() {
-	url := "https://raw.githubusercontent.com/JaredCH/KeyChain/main/README.md"
-    whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-    whr.Open("GET", url, false), whr.Send()
-    RegExMatch(whr.ResponseText, "Status: \K\w+", tag)
-    return tag
-}
-
-GitVersion(User, Repo) {
-    url := "https://api.github.com/repos/" User "/" Repo "/releases/latest"
-    whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-    whr.Open("GET", url, false), whr.Send()
-    RegExMatch(whr.ResponseText, "_name\W+\K[^""]+", tag)
-    return tag
-}
 
 
 
@@ -233,19 +235,19 @@ Gui, Show,
 return
 
 hotkey1:
-send, %string1%
+ExecuteAction("%history1%", string1)
 return
 hotkey2:
-send, %string2%
+ExecuteAction("%history2%", string2)
 return
 hotkey3:
-send, %string3%
+ExecuteAction("%history3%", string3)
 return
 hotkey4:
-send, %string4%0
+ExecuteAction("%history4%", string4)
 return
 hotkey5:
-send, %string5%
+ExecuteAction("%history5%", string5)
 return
 
 UpdateScripts:
@@ -262,7 +264,6 @@ Sleep 4000
 HideTrayTip()
 reload
 return
-
 
 HideTrayTip() {
     TrayTip  
@@ -344,6 +345,13 @@ Sleep 2000
 reload
 return
 
+ExecuteHotkey(string_name, string_contents)
+{
+
+
+
+}
+
 
 ExecuteAction(string_name, string_contents)
 {
@@ -383,6 +391,29 @@ else
     return
 }
 else
+	IfInString, string_contents, Minimize
+	{
+	StringSplit, ScriptArray, string_contents, `,,
+    Winminimize, %ScriptArray2%
+    return
+}
+else
+	IfInString, string_contents, FakeLeft
+	{
+	send, ^#{Left}
+	winminimize, ahk_exe ms-teams.exe
+	Winminimize, Messages for web - Google Chrome
+    return
+}
+else
+	IfInString, string_contents, FakeRight
+	{
+	send, ^#{Right}
+	winminimize, ahk_exe ms-teams.exe
+	Winminimize, Messages for web - Google Chrome
+    return
+}
+else
 	IfInString, string_contents, Google
 	{
 	oldclip :=clipboard
@@ -393,6 +424,7 @@ else
     return
 }
 else
+	SetKeyDelay, 10
 send, %string_contents%
 }
 
@@ -428,6 +460,8 @@ else
 	toggle := "OFF"
 	ToolTip
 }
+
+
 return
 
 F1::ExecuteAction("F1", F1)
@@ -445,9 +479,8 @@ F13::ExecuteAction("F13", F13)
 F14::ExecuteAction("F14", F14)
 F15::ExecuteAction("F15", F15)
 F16::ExecuteAction("F16", F16)
-F17::h
+F17::ExecuteAction("F17", F17)
 F18::ExecuteAction("F18", F18)
-
 
 ^`::ExecuteAction("^`", Ctilde)
 ^1::ExecuteAction("^1", C1)
@@ -492,8 +525,6 @@ F18::ExecuteAction("F18", F18)
 #7::ExecuteAction("#7", W7)
 #8::ExecuteAction("#8", W8)
 #9::ExecuteAction("#9", W9)
-
-Pause::Pause
 
 GuiClose:
 ExitApp
