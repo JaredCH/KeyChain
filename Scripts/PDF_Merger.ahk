@@ -6,7 +6,7 @@ Ifinstring, Title, Nitro
 {
 MouseGetPos, MouseX, MouseY
 string=
-mouseclick, left, 80, 100
+mouseclick, left, 103, 75
 sleep, 100
 mousemove, 419, 376
 Mouseclick, left,,,3
@@ -30,6 +30,7 @@ Py:=Py+10
 mousemove, %Px%, %Py%
 sleep, 300
 MouseClickDrag, Left, %Px%, %Py%, %MouseX%, %Mousey%, 5
+Clipboard=
 }
 return
 

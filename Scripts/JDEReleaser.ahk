@@ -1,5 +1,6 @@
  
 NumpadDiv::
+
 WinGetActiveTitle, Title
 Ifinstring, Title, Workbench
 {
@@ -12,12 +13,15 @@ Ifinstring, Title, Workbench
 	;~ Send, %A_LoopField%{Enter}
 	;~ sleep, 1000
 	
-ControlClick, x542 y535, Shop Floor Workbench,, Right
+ControlClick, x535 y541, Shop Floor Workbench,, Right
 sleep, 500
-ControlClick, x592 y672, Shop Floor Workbench,,
-sleep, 2000
-ControlClick, x222 y222, Shop Floor Workbench,,
-;~ }
+ControlClick, x590 y699, Shop Floor Workbench,, Left
+loop {
+ 	PixelGetColor, avail, 1382, 197, rgb
+ 	Sleep, 50
+ } until avail = 0xF3F3F3
+ControlClick, x221 y226, Shop Floor Workbench,,
+SLEEP, 250
 }
 return
 
@@ -27,9 +31,18 @@ WinGetActiveTitle, Title
 Ifinstring, Title, Workbench
 {
 send, ^!O
-sleep, 2000
-ControlClick, x542 y535, Shop Floor Workbench,, Left
-sleep, 1000
+loop {
+ 	PixelGetColor, avail, 1382, 197, rgb
+ 	Sleep, 50
+ } until avail = 0xFFFFFF
+  sleep, 500
+ControlClick, x535 y541, Shop Floor Workbench,, Left
+sleep, 200
+loop {
+ 	PixelGetColor, avail, 941, 400, rgb
+ 	Sleep, 50
+ } until avail = 0xFFFFFF
+ sleep, 1000
 send, 40
 sleep, 250
 send, ^!O

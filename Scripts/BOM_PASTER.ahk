@@ -26,19 +26,24 @@ Loop, Parse, myCopiedClipboard, `n, `r
 return
 
 NumLock::
+if (f1coordx = "")
+{
+	Msgbox, Co-ords not set
+	return
+	}
 DllCall("SetCursorPos", "int", f1coordx, "int", f1coordy)
 sleep, 150
 send, {LButton 3}
 sleep, 300
 send, ^c
-tooltip, %Cipboard%
+tooltip, %Clipboard%
 masterstring:=
 Loop, % linesInArraySeperatedbyNewLine.MaxIndex()
 {
 	haybail:= linesInArraySeperatedbyNewLine[A_index]
 	IfInString, haybail, %Clipboard%
 	{
-		tooltip, Found: %Cipboard%
+		tooltip, Found: %Clipboard%
 		;~ msgbox, % linesInArraySeperatedbyNewLine[A_index]
 		StringSplit, bom, haybail, %A_Tab%
 		masterstring =%masterstring%%bom2%%A_Tab%%bom3%%A_Tab%%bom4%%A_Tab%%bom5%%A_Tab%%bom6%`n
@@ -60,17 +65,17 @@ Return
 
 
 `::
-	PixelSearch, Px, Py, 216, 449, 808, 1019, 0XD77800, 3, Fast
+	PixelSearch, Px, Py, 216, 449, 808, 1019, 0xCF693C, 3, Fast
 if ErrorLevel
     MsgBox, That color was not found in the specified region.
 else
-    mouseClick, Left,  % 224, Py
+    mouseClick, Left,  % 240, Py
 sleep, 300
-	mouseclick, Left, % 224, Py+25
+	mouseclick, Left, % 240, Py+25
 	sleep, 300
-	MouseClick, Right, % 224, Py+25
+	MouseClick, Right, % 240, Py+25
 	sleep, 500
-	MouseClick, Left, % 224+45, Py+85
+	MouseClick, Left, % 275, Py+110
 RETURN
 
 
